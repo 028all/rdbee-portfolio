@@ -1640,16 +1640,15 @@
   </div>
   <div>
     <p class="footer-col-label">Connect</p>
-    <div class="footer-links">
-      <a href="#">Instagram</a>
-      <a href="https://www.behance.net/rdbee" target="_blank">Behance</a>
-      <a href="https://www.instagram.com/nnhanlee" target="_blank">@nnhanlee</a>
-      <a href="#">hello@yourname.com</a>
+    <div class="footer-links" id="footerConnect">
+      <a href="https://www.instagram.com/nnhanlee" target="_blank" id="footerInstagram">Instagram</a>
+      <a href="https://www.behance.net/rdbee" target="_blank" id="footerBehance">Behance</a>
+      <a href="mailto:hello@rdbee.design" id="footerEmail">hello@rdbee.design</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2024 Rd Bee. All rights reserved.</span>
-    <span>Ho Chi Minh City, Vietnam</span>
+    <span id="footerCopyright">© 2025 Rd Bee. All rights reserved.</span>
+    <span id="footerLocation">Ho Chi Minh City, Vietnam</span>
   </div>
 </footer>
 
@@ -2018,65 +2017,81 @@
   const GITHUB_BRANCH = 'main';
   const RAW_BASE = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
 
+  function resolveImg(path) {
+    if (!path || path.trim() === '') return null;
+    return path.startsWith('http') ? path : `${RAW_BASE}${path}`;
+  }
+
   async function loadSettings() {
     try {
       const res = await fetch(`${RAW_BASE}/data/settings.json?t=${Date.now()}`);
       if (!res.ok) return;
       const s = await res.json();
 
-      // Logo
-      if (s.logo_name) {
-        document.getElementById('siteLogo').textContent = s.logo_name;
+      // --- HEADER ---
+      if (s.logo_name) document.getElementById('siteLogo').textContent = s.logo_name;
+      if (s.status)    document.getElementById('siteStatus').textContent = s.status;
+
+      // --- HERO ---
+      if (s.tagline)   document.getElementById('heroEyebrow').textContent = s.tagline;
+      if (s.hero_desc) document.getElementById('heroDesc').innerHTML = s.hero_desc.replace(/\n/g, '<br>');
+      const heroImg = resolveImg(s.hero_image);
+      if (heroImg) {
+        document.getElementById('heroRight').innerHTML = `
+          <img src="${heroImg}" alt="Hero" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.88;">
+          <span class="hero-img-label">Featured — 2025</span>`;
       }
-      // Status header
-      if (s.status) {
-        document.getElementById('siteStatus').textContent = s.status;
-      }
-      // Hero eyebrow (tagline)
-      if (s.tagline) {
-        document.getElementById('heroEyebrow').textContent = s.tagline;
-      }
-      // Hero desc
-      if (s.hero_desc) {
-        const descEl = document.getElementById('heroDesc');
-        descEl.innerHTML = s.hero_desc.replace(/\n/g, '<br>');
-      }
-      // Hero image
-      if (s.hero_image && s.hero_image.trim() !== '') {
-        const heroRight = document.getElementById('heroRight');
-        const imgSrc = s.hero_image.startsWith('http')
-          ? s.hero_image
-          : `${RAW_BASE}${s.hero_image}`;
-        heroRight.innerHTML = `
-          <img src="${imgSrc}" alt="Hero" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.88;">
-          <span class="hero-img-label">Featured — 2025</span>
-        `;
-      }
-      // About email
-      if (s.email) {
-        const aboutContent = document.querySelector('.about-col:last-child .about-col-content');
-        if (aboutContent) aboutContent.innerHTML = s.email;
-      }
-      // About social links
-      if (s.instagram || s.behance) {
-        const aboutSub = document.querySelector('.about-col:last-child .about-col-sub');
-        if (aboutSub) {
-          aboutSub.innerHTML = `
-            ${s.instagram ? `Instagram: <a href="https://www.instagram.com/${s.instagram.replace('@','')}" target="_blank" style="color:var(--black);text-decoration:none;">${s.instagram}</a>` : ''}
-            ${s.behance ? `<br><a href="${s.behance}" target="_blank" style="color:var(--black);text-decoration:none;">Behance: rdbee</a>` : ''}
-            ${s.location ? `<br>${s.location}` : ''}
-          `;
+
+      // --- ABOUT SECTION ---
+      const aboutCols = document.querySelectorAll('.about-col');
+      if (aboutCols.length >= 3) {
+        // Col 1: Designer info
+        if (s.location) {
+          const sub1 = aboutCols[0].querySelector('.about-col-sub');
+          if (sub1) sub1.innerHTML = `Ho Chi Minh City<br>Available Worldwide`;
+        }
+        // Col 3: Contact
+        const content3 = aboutCols[2].querySelector('.about-col-content');
+        const sub3     = aboutCols[2].querySelector('.about-col-sub');
+        if (content3 && s.email) content3.textContent = s.email;
+        if (sub3) {
+          const ig  = s.instagram ? `Instagram: <a href="https://www.instagram.com/${s.instagram.replace('@','')}" target="_blank" style="color:var(--black);text-decoration:none;">${s.instagram}</a>` : '';
+          const be  = s.behance   ? `<a href="${s.behance}" target="_blank" style="color:var(--black);text-decoration:none;">Behance: rdbee</a>` : '';
+          const loc = s.location  ? s.location : '';
+          sub3.innerHTML = [ig, be, loc].filter(Boolean).join('<br>');
         }
       }
-      // Footer email link
-      if (s.email) {
-        const footerEmail = document.querySelector('.footer-links a[href^="hello"]');
-        if (footerEmail) footerEmail.textContent = s.email;
-      }
-      // Social section handle
+
+      // --- SOCIAL SECTION handle ---
       if (s.instagram) {
-        const socialHandle = document.querySelector('#personal .section-count');
-        if (socialHandle) socialHandle.textContent = s.instagram;
+        const socialCount = document.querySelector('#personal .section-count');
+        if (socialCount) socialCount.textContent = s.instagram;
+      }
+
+      // --- FOOTER ---
+      if (s.logo_name) {
+        const footerLogo = document.querySelector('.footer-logo');
+        if (footerLogo) footerLogo.textContent = s.logo_name;
+      }
+      if (s.email) {
+        const fe = document.getElementById('footerEmail');
+        if (fe) { fe.textContent = s.email; fe.href = `mailto:${s.email}`; }
+      }
+      if (s.instagram) {
+        const fi = document.getElementById('footerInstagram');
+        if (fi) { fi.textContent = s.instagram; fi.href = `https://www.instagram.com/${s.instagram.replace('@','')}`; }
+      }
+      if (s.behance) {
+        const fb = document.getElementById('footerBehance');
+        if (fb) { fb.href = s.behance; }
+      }
+      if (s.location) {
+        const fl = document.getElementById('footerLocation');
+        if (fl) fl.textContent = s.location;
+      }
+      if (s.logo_name) {
+        const fc = document.getElementById('footerCopyright');
+        if (fc) fc.textContent = `© 2025 ${s.logo_name}. All rights reserved.`;
       }
 
     } catch(e) {
