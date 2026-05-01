@@ -1,0 +1,183 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+locale: 'vi'
+
+collections:
+
+  # ============================================================
+  # THÔNG TIN CÁ NHÂN
+  # ============================================================
+  - name: "settings"
+    label: "⚙️ Thông tin cá nhân"
+    files:
+      - name: "general"
+        label: "Thông tin chung"
+        file: "data/settings.json"
+        fields:
+          - { label: "Tên hiển thị (Logo)", name: "logo_name", widget: "string", default: "Rd Bee" }
+          - { label: "Tagline (Hero eyebrow)", name: "tagline", widget: "string", default: "Branding Designer — Hook up with Beauty" }
+          - { label: "Mô tả ngắn (Hero desc)", name: "hero_desc", widget: "text", default: "Specialising in beauty, cosmetics & fashion." }
+          - { label: "Trạng thái (header phải)", name: "status", widget: "string", default: "Available for Projects" }
+          - { label: "Email liên hệ", name: "email", widget: "string", default: "hello@rdbee.design" }
+          - { label: "Instagram handle", name: "instagram", widget: "string", default: "@nnhanlee" }
+          - { label: "Behance URL", name: "behance", widget: "string", default: "https://www.behance.net/rdbee" }
+          - { label: "Địa điểm", name: "location", widget: "string", default: "Ho Chi Minh City, Vietnam" }
+          - label: "Ảnh Hero (cột phải)"
+            name: "hero_image"
+            widget: "image"
+            required: false
+            hint: "Tỉ lệ khuyên dùng: 3:4 hoặc 2:3. Tối thiểu 1200px chiều cao."
+
+  # ============================================================
+  # PROJECTS
+  # ============================================================
+  - name: "projects"
+    label: "🖼 Projects"
+    label_singular: "Project"
+    folder: "data/projects"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    summary: "{{title}} — {{category}}"
+    fields:
+      - { label: "Tên project", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "string", hint: "VD: Beauty Institute — Branding" }
+      - label: "Ảnh bìa (Card)"
+        name: "cover_image"
+        widget: "image"
+        required: false
+        hint: "Tỉ lệ khuyên dùng: 3:4. Kích thước: 900×1200px"
+      - { label: "Client", name: "client", widget: "string" }
+      - { label: "Năm", name: "year", widget: "string" }
+      - { label: "Scope", name: "scope", widget: "string", hint: "VD: Brand Identity, Packaging" }
+      - { label: "Industry", name: "industry", widget: "string" }
+      - { label: "Mô tả project", name: "description", widget: "text" }
+      - label: "Ảnh Hero (trang chi tiết)"
+        name: "hero_image"
+        widget: "image"
+        required: false
+        hint: "Tỉ lệ khuyên dùng: 3:4. Kích thước: 1200×1600px"
+      - label: "Gallery ảnh (trang chi tiết)"
+        name: "gallery"
+        widget: "list"
+        required: false
+        hint: "Tỉ lệ khuyên dùng: 3:4. Kích thước: 900×1200px mỗi ảnh"
+        field:
+          label: "Ảnh"
+          name: "image"
+          widget: "image"
+      - label: "Hiển thị trên trang chủ"
+        name: "featured"
+        widget: "boolean"
+        default: true
+      - label: "Thứ tự hiển thị"
+        name: "order"
+        widget: "number"
+        default: 1
+        hint: "Số nhỏ hơn hiển thị trước"
+
+  # ============================================================
+  # BRANDS
+  # ============================================================
+  - name: "brands"
+    label: "🏷 Brands"
+    label_singular: "Brand"
+    folder: "data/brands"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "name"
+    summary: "{{name}} — {{industry}}"
+    fields:
+      - { label: "Tên thương hiệu", name: "name", widget: "string" }
+      - { label: "Industry / Lĩnh vực", name: "industry", widget: "string", hint: "VD: Beauty Institute, Cosmetics..." }
+      - label: "Trạng thái"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "✅ Active — có project", value: "active" }
+          - { label: "🔒 Coming Soon", value: "coming_soon" }
+        default: "active"
+      - label: "Projects liên quan"
+        name: "projects"
+        widget: "list"
+        required: false
+        hint: "Liệt kê tên project đã làm cho brand này"
+        fields:
+          - { label: "Tên project", name: "title", widget: "string" }
+          - { label: "Tag / Loại", name: "tag", widget: "string", hint: "VD: Branding, Print & Packaging" }
+      - label: "Thứ tự trong dropdown"
+        name: "order"
+        widget: "number"
+        default: 1
+
+  # ============================================================
+  # DESIGN PACKAGES
+  # ============================================================
+  - name: "packages"
+    label: "📦 Design Packages"
+    label_singular: "Package"
+    folder: "data/packages"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    fields:
+      - { label: "Tên gói", name: "title", widget: "string" }
+      - { label: "Eyebrow label", name: "eyebrow", widget: "string" }
+      - { label: "Tagline", name: "tagline", widget: "text" }
+      - { label: "Mô tả tổng quan", name: "intro", widget: "text" }
+      - label: "Ảnh Hero"
+        name: "hero_image"
+        widget: "image"
+        required: false
+        hint: "Tỉ lệ: 1:1 hoặc 3:2. Kích thước: 1200×800px"
+      - label: "Plans / Gói con"
+        name: "plans"
+        widget: "list"
+        fields:
+          - { label: "Tier label", name: "tier", widget: "string", hint: "VD: Plan A, Plan B — Recommended" }
+          - { label: "Tên gói", name: "name", widget: "string" }
+          - { label: "Giá", name: "price", widget: "string", hint: "VD: 8.000.000₫" }
+          - { label: "Ghi chú giá", name: "price_note", widget: "string", default: "Chưa bao gồm thuế VAT 10%" }
+          - label: "Nổi bật (nền đen)"
+            name: "featured"
+            widget: "boolean"
+            default: false
+          - label: "Danh sách deliverables"
+            name: "items"
+            widget: "list"
+            field: { label: "Nội dung", name: "item", widget: "string" }
+      - label: "Gallery tham khảo (6 ảnh)"
+        name: "gallery"
+        widget: "list"
+        required: false
+        hint: "Tỉ lệ: 1:1. Kích thước: 800×800px mỗi ảnh"
+        fields:
+          - label: "Ảnh"
+            name: "image"
+            widget: "image"
+          - { label: "Label", name: "label", widget: "string" }
+
+  # ============================================================
+  # SOCIAL / PERSONAL
+  # ============================================================
+  - name: "social"
+    label: "📱 Social Content"
+    label_singular: "Social Post"
+    folder: "data/social"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Label", name: "label", widget: "string", hint: "VD: Beauty Editorial" }
+      - label: "Ảnh"
+        name: "image"
+        widget: "image"
+        hint: "Tỉ lệ: 1:1. Kích thước: 800×800px"
+      - label: "Thứ tự"
+        name: "order"
+        widget: "number"
+        default: 1
