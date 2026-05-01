@@ -1277,14 +1277,14 @@
   </div>
 </div>
 <header>
-  <a href="#" class="logo" id="siteLogo">Rd Bee</a>
+  <a href="#" class="logo" id="siteLogo">{{LOGO_NAME}}</a>
   <nav id="mainNav">
     <a href="#work" onclick="closeMenu()">Work</a>
     <div class="nav-dropdown" id="brandsDropdown">
       <button class="nav-dropdown-trigger" id="brandsTrigger">Brands</button>
       <div class="nav-dropdown-panel" id="brandsPanel">
         <div class="nav-dropdown-inner">
-          <!-- No brands yet -->
+          {{BRANDS_DROPDOWN}}
         </div><!-- /.nav-dropdown-inner -->
       </div><!-- /.nav-dropdown-panel -->
     </div><!-- /.nav-dropdown -->
@@ -1318,18 +1318,18 @@
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" style="display:none;" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <span class="header-right" id="siteStatus">Available for Projects</span>
+  <span class="header-right" id="siteStatus">{{STATUS}}</span>
 </header>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <p class="hero-eyebrow fade-in" id="heroEyebrow">Branding Designer — Hook up with Beauty</p>
+    <p class="hero-eyebrow fade-in" id="heroEyebrow">{{TAGLINE}}</p>
     <h1 class="hero-title fade-in fade-in-delay-1">Visual<br>Brand<br><em>Identity</em></h1>
-    <p class="hero-desc fade-in fade-in-delay-2" id="heroDesc">Specialising in beauty, cosmetics &amp; fashion. Crafting images that sell.</p>
+    <p class="hero-desc fade-in fade-in-delay-2" id="heroDesc">{{HERO_DESC}}</p>
   </div>
   <div class="hero-right" id="heroRight">
-    <div class="img-placeholder tone-1" style="height:100%;font-size:10px;letter-spacing:0.2em;">Hero Image</div>
+    {{HERO_IMAGE}}
     <span class="hero-img-label">Featured — 2025</span>
   </div>
 </section>
@@ -1360,19 +1360,19 @@
 <div id="work">
   <div class="section-header">
     <span class="section-label">Selected Work</span>
-    <span class="section-count" id="projectsCount">00 Projects</span>
+    <span class="section-count" id="projectsCount">{{PROJECTS_COUNT}}</span>
   </div>
 
   <div class="projects-grid" id="projectsGrid">
-    <div style="padding:40px;text-align:center;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);">Projects coming soon</div>
+    {{PROJECTS_GRID}}
   </div>
   <!-- LOAD MORE BAR -->
-  <div class="load-more-bar" id="loadMoreBar" style="display:none">
+  <div class="load-more-bar" id="loadMoreBar" style="display:{{LOAD_MORE_DISPLAY}}">
     <button class="load-more-btn" onclick="toggleProjects()">
       <span id="loadMoreText">View All Projects</span>
       <span class="load-more-arrow"><span></span>→</span>
     </button>
-    <span class="load-more-count" id="loadMoreCount"></span>
+    <span class="load-more-count" id="loadMoreCount">{{LOAD_MORE_COUNT}}</span>
   </div>
 </div>
 
@@ -1383,7 +1383,7 @@
     <span class="section-count">Campaign Work</span>
   </div>
   <div class="featured-row" id="featuredRow">
-    <div style="padding:80px;text-align:center;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);width:100%;">Featured projects coming soon</div>
+    {{FEATURED_ROW}}
   </div>
 </div>
 <!-- ABOUT STRIP -->
@@ -1394,13 +1394,13 @@
   <div class="about-strip">
     <div class="about-col">
       <p class="about-col-label">Designer</p>
-      <p class="about-col-content">Crafting visual identities for beauty &amp; fashion brands.</p>
+      <p class="about-col-content">{{ABOUT_DESIGNER}}</p>
       <p class="about-col-sub">Ho Chi Minh City<br>Available Worldwide</p>
     </div>
     <div class="about-col">
       <p class="about-col-label">Expertise</p>
-      <p class="about-col-content">Brand Identity<br>Packaging Design<br>Art Direction</p>
-      <p class="about-col-sub">Social Content<br>Visual Strategy</p>
+      <p class="about-col-content">{{ABOUT_EXPERTISE}}</p>
+      <p class="about-col-sub">{{ABOUT_EXPERTISE_SUB}}</p>
     </div>
     <div class="about-col">
       <p class="about-col-label">Contact</p>
@@ -1419,33 +1419,14 @@
     <span class="section-count" id="socialHandle">@nnhanlee</span>
   </div>
   <div class="social-strip" id="socialStrip">
-    
-      <div class="social-item">
-        <div class="social-img-wrap"><div class="img-placeholder tone-2" style="height:100%;">Post</div></div>
-        <p class="social-label">Beauty Editorial</p>
-      </div>
-
-      <div class="social-item">
-        <div class="social-img-wrap"><div class="img-placeholder tone-3" style="height:100%;">Post</div></div>
-        <p class="social-label">Fashion Campaign</p>
-      </div>
-
-      <div class="social-item">
-        <div class="social-img-wrap"><div class="img-placeholder tone-1" style="height:100%;">Post</div></div>
-        <p class="social-label">Brand Packaging</p>
-      </div>
-
-      <div class="social-item">
-        <div class="social-img-wrap"><div class="img-placeholder tone-5" style="height:100%;">Post</div></div>
-        <p class="social-label">Personal Project</p>
-      </div>
+    {{SOCIAL_STRIP}}
   </div>
 </div>
 <!-- FOOTER -->
 <footer>
   <div>
-    <p class="footer-logo">Rd Bee</p>
-    <p class="footer-desc">Branding Designer<br>Hook up with Beauty<br>Cosmetics · Beauty · Fashion</p>
+    <p class="footer-logo">{{LOGO_NAME}}</p>
+    <p class="footer-desc">{{FOOTER_DESC}}</p>
   </div>
   <div>
     <p class="footer-col-label">Navigation</p>
@@ -1459,14 +1440,14 @@
   <div>
     <p class="footer-col-label">Connect</p>
     <div class="footer-links" id="footerConnect">
-      <a href="https://www.instagram.com/nnhanlee" target="_blank" id="footerInstagram">@nnhanlee</a>
-      <a href="https://www.behance.net/rdbee" target="_blank" id="footerBehance">Behance</a>
-      <a href="mailto:hello@rdbee.design" id="footerEmail">hello@rdbee.design</a>
+      <a href="{{INSTAGRAM_URL}}" target="_blank" id="footerInstagram">{{INSTAGRAM}}</a>
+      <a href="{{BEHANCE_URL}}" target="_blank" id="footerBehance">Behance</a>
+      <a href="mailto:{{EMAIL}}" id="footerEmail">{{EMAIL}}</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span id="footerCopyright">© 2025 Rd Bee. All rights reserved.</span>
-    <span id="footerLocation">Ho Chi Minh City, Vietnam</span>
+    <span id="footerCopyright">© {{FOOTER_YEAR}} {{LOGO_NAME}}. All rights reserved.</span>
+    <span id="footerLocation">{{LOCATION}}</span>
   </div>
 </footer>
 
@@ -1557,7 +1538,7 @@
   });
 
   // Project data
-  const projects = [];
+  const projects = {{PROJECTS_JS_DATA}};
 
   function openProject(idx) {
     const p = projects[idx];
