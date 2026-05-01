@@ -1448,10 +1448,10 @@
 <div id="work">
   <div class="section-header">
     <span class="section-label">Selected Work</span>
-    <span class="section-count">07 Projects</span>
+    <span class="section-count" id="projectsCount">07 Projects</span>
   </div>
 
-  <div class="projects-grid">
+  <div class="projects-grid" id="projectsGrid">
     <a class="project-card" href="#" onclick="openProject(0); return false;">
       <div class="project-img-wrap">
         <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/ccd661244480781.69997b85987fb.png" alt="KT Centre Group" style="width:100%;height:100%;object-fit:cover;opacity:0.9;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.5s ease;display:block;">
@@ -1539,7 +1539,7 @@
     <span class="section-label">In Focus</span>
     <span class="section-count">Campaign Work</span>
   </div>
-  <div class="featured-row">
+  <div class="featured-row" id="featuredRow">
     <a class="featured-card" href="#" onclick="openProject(0); return false;">
       <div class="featured-img-wrap">
         <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/47b8f9244480781.699980ddb72af.png" alt="KT Centre Group Campaign" style="width:100%;height:100%;object-fit:cover;opacity:0.88;transition:transform 0.8s ease,opacity 0.5s ease;display:block;">
@@ -1581,7 +1581,7 @@
     </div>
     <div class="about-col">
       <p class="about-col-label">Contact</p>
-      <p class="about-col-content">hello@<br>yourname.com</p>
+      <p class="about-col-content" id="aboutEmail">hello@rdbee.design</p>
       <p class="about-col-sub">Instagram: <a href="https://www.instagram.com/nnhanlee" target="_blank" style="color:var(--black);text-decoration:none;">@nnhanlee</a><br>
       <a href="https://www.behance.net/rdbee" target="_blank" style="color:var(--black);text-decoration:none;">Behance: rdbee</a><br>
       Ho Chi Minh City</p>
@@ -1593,9 +1593,9 @@
 <div id="personal">
   <div class="section-header">
     <span class="section-label">Social</span>
-    <span class="section-count">@yourhandle</span>
+    <span class="section-count" id="socialHandle">@nnhanlee</span>
   </div>
-  <div class="social-strip">
+  <div class="social-strip" id="socialStrip">
     <div class="social-item">
       <div class="social-img-wrap">
         <div class="img-placeholder tone-2" style="height:100%;">Post</div>
@@ -2101,6 +2101,235 @@
 
   // Load data khi trang khởi động
   loadSettings();
+
+
+  // =============================================
+  // LOAD PROJECTS FROM GITHUB CMS
+  // =============================================
+  async function loadProjects() {
+    try {
+      // List project files from GitHub API
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data/projects?ref=${GITHUB_BRANCH}&t=${Date.now()}`);
+      if (!res.ok) return;
+      const files = await res.json();
+      if (!Array.isArray(files) || files.length === 0) return;
+
+      // Fetch each project JSON
+      const projectsData = await Promise.all(
+        files
+          .filter(f => f.name.endsWith('.json'))
+          .map(f => fetch(f.download_url + '?t=' + Date.now()).then(r => r.json()))
+      );
+
+      // Sort by order field
+      projectsData.sort((a, b) => (a.order || 99) - (b.order || 99));
+
+      // Rebuild projects JS array
+      window.cmsProjects = projectsData;
+
+      // Rebuild grid
+      const grid = document.getElementById('projectsGrid');
+      if (!grid) return;
+      const VISIBLE = 6;
+      grid.innerHTML = projectsData.map((p, i) => {
+        const imgSrc = resolveImg(p.cover_image);
+        const imgHTML = imgSrc
+          ? `<img src="${imgSrc}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;opacity:0.9;display:block;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.5s ease;">`
+          : `<div class="img-placeholder tone-${(i%6)+1}" style="height:100%;">Image</div>`;
+        const hidden = i >= VISIBLE ? ' hidden-card' : '';
+        return `
+          <a class="project-card${hidden}" href="#" onclick="openCMSProject(${i}); return false;">
+            <div class="project-img-wrap">${imgHTML}</div>
+            <div class="project-info">
+              <p class="project-category">${p.category || ''}</p>
+              <h3 class="project-name">${(p.title||'').replace(/\s+(\S)/g, '<br>$1')}</h3>
+            </div>
+          </a>`;
+      }).join('');
+
+      // Update count
+      const countEl = document.getElementById('projectsCount');
+      if (countEl) countEl.textContent = `${String(projectsData.length).padStart(2,'0')} Projects`;
+
+      // Update load more
+      const hiddenNew = grid.querySelectorAll('.hidden-card');
+      const bar = document.getElementById('loadMoreBar');
+      if (bar) bar.style.display = hiddenNew.length > 0 ? 'flex' : 'none';
+      const lmCount = document.getElementById('loadMoreCount');
+      if (lmCount) lmCount.textContent = `+${hiddenNew.length} more`;
+
+      // Update featured row with first 2 featured projects
+      const featured = projectsData.filter(p => p.featured !== false).slice(0,2);
+      const featuredRow = document.getElementById('featuredRow');
+      if (featuredRow && featured.length > 0) {
+        featuredRow.innerHTML = featured.map((p, i) => {
+          const fIdx = projectsData.indexOf(p);
+          const fImg = resolveImg(p.hero_image || p.cover_image);
+          const fImgHTML = fImg
+            ? `<img src="${fImg}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;opacity:0.88;display:block;transition:transform 0.8s ease,opacity 0.5s ease;">`
+            : `<div class="img-placeholder tone-${i+2}" style="height:100%;">Campaign Image</div>`;
+          return `
+            <a class="featured-card" href="#" onclick="openCMSProject(${fIdx}); return false;">
+              <div class="featured-img-wrap">${fImgHTML}</div>
+              <div class="featured-meta">${p.category || ''}</div>
+              <div class="featured-info">
+                <p class="featured-eyebrow">${p.scope || ''}</p>
+                <h3 class="featured-title">${p.title || ''}</h3>
+              </div>
+            </a>`;
+        }).join('');
+      }
+
+    } catch(e) {
+      console.log('Projects load skipped:', e.message);
+    }
+  }
+
+  function openCMSProject(idx) {
+    const p = window.cmsProjects ? window.cmsProjects[idx] : null;
+    if (!p) return;
+    const total = window.cmsProjects.length;
+    document.getElementById('ppEyebrow').textContent = p.category || '';
+    document.getElementById('ppTitle').textContent = p.title || '';
+    document.getElementById('ppClient').textContent = p.client || '—';
+    document.getElementById('ppYear').textContent = p.year || '—';
+    document.getElementById('ppScope').textContent = p.scope || '—';
+    document.getElementById('ppIndustry').textContent = p.industry || '—';
+    document.getElementById('ppDesc').textContent = p.description || '—';
+    document.getElementById('projectCounter').textContent = `${String(idx+1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+
+    // Hero image
+    const heroEl = document.getElementById('ppHeroImg');
+    const hImg = resolveImg(p.hero_image || p.cover_image);
+    heroEl.innerHTML = hImg
+      ? `<img src="${hImg}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+      : `<div class="img-placeholder tone-2" style="height:100%;"></div>`;
+
+    // Gallery
+    const galleryEl = document.getElementById('ppGallery');
+    const imgs = Array.isArray(p.gallery) ? p.gallery : [];
+    if (imgs.length > 0) {
+      galleryEl.innerHTML = imgs.map(g => {
+        const src = resolveImg(typeof g === 'string' ? g : g.image);
+        return `<div class="gallery-img"><div class="gallery-img-inner" style="aspect-ratio:3/4;overflow:hidden;">
+          <img src="${src}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+        </div></div>`;
+      }).join('');
+    } else {
+      const tones = ['tone-1','tone-3','tone-4','tone-2','tone-5','tone-6'];
+      galleryEl.innerHTML = tones.map(t =>
+        `<div class="gallery-img"><div class="gallery-img-inner img-placeholder ${t}" style="aspect-ratio:3/4;"></div></div>`
+      ).join('');
+    }
+
+    const page = document.getElementById('projectPage');
+    page.classList.add('open');
+    page.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  // =============================================
+  // LOAD SOCIAL FROM GITHUB CMS
+  // =============================================
+  async function loadSocial() {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data/social?ref=${GITHUB_BRANCH}&t=${Date.now()}`);
+      if (!res.ok) return;
+      const files = await res.json();
+      if (!Array.isArray(files) || files.length === 0) return;
+
+      const socialData = await Promise.all(
+        files.filter(f => f.name.endsWith('.json'))
+          .map(f => fetch(f.download_url + '?t=' + Date.now()).then(r => r.json()))
+      );
+      socialData.sort((a,b) => (a.order||99) - (b.order||99));
+
+      const strip = document.getElementById('socialStrip');
+      if (!strip || socialData.length === 0) return;
+      strip.innerHTML = socialData.map(s => {
+        const img = resolveImg(s.image);
+        const imgHTML = img
+          ? `<img src="${img}" alt="${s.label}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;">`
+          : `<div class="img-placeholder tone-2" style="height:100%;">Post</div>`;
+        return `
+          <div class="social-item">
+            <div class="social-img-wrap">${imgHTML}</div>
+            <p class="social-label">${s.label || ''}</p>
+          </div>`;
+      }).join('');
+    } catch(e) {
+      console.log('Social load skipped:', e.message);
+    }
+  }
+
+  // =============================================
+  // LOAD BRANDS DROPDOWN FROM GITHUB CMS
+  // =============================================
+  async function loadBrands() {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data/brands?ref=${GITHUB_BRANCH}&t=${Date.now()}`);
+      if (!res.ok) return;
+      const files = await res.json();
+      if (!Array.isArray(files) || files.length === 0) return;
+
+      const brandsData = await Promise.all(
+        files.filter(f => f.name.endsWith('.json'))
+          .map(f => fetch(f.download_url + '?t=' + Date.now()).then(r => r.json()))
+      );
+      brandsData.sort((a,b) => (a.order||99) - (b.order||99));
+
+      const inner = document.querySelector('#brandsPanel .nav-dropdown-inner');
+      if (!inner || brandsData.length === 0) return;
+
+      inner.innerHTML = brandsData.map(b => {
+        const isSoon = b.status === 'coming_soon';
+        const projects = Array.isArray(b.projects) ? b.projects : [];
+        const projectLinks = projects.map((proj, pi) => {
+          if (isSoon) return `
+            <a class="dropdown-project-link" href="#" onclick="return false;" style="opacity:0.38;pointer-events:none;">
+              <span>${proj.title}</span>
+              <span class="dropdown-project-tag">${proj.tag || ''}</span>
+            </a>`;
+          // Find matching CMS project index
+          const cmsIdx = window.cmsProjects
+            ? window.cmsProjects.findIndex(p => p.title && p.title.toLowerCase().includes((proj.title||'').toLowerCase().split(' ')[0]))
+            : -1;
+          const clickFn = cmsIdx >= 0
+            ? `openCMSProject(${cmsIdx}); closeBrands(); return false;`
+            : `return false;`;
+          return `
+            <a class="dropdown-project-link" href="#" onclick="${clickFn}">
+              <span>${proj.title}</span>
+              <span style="display:flex;align-items:center;gap:8px;">
+                <span class="dropdown-project-tag">${proj.tag || ''}</span>
+                <span class="dropdown-arrow">→</span>
+              </span>
+            </a>`;
+        });
+
+        const soonLink = isSoon ? `
+          <a class="dropdown-project-link" href="#" onclick="return false;" style="opacity:0.38;pointer-events:none;">
+            <span>Coming Soon</span>
+            <span class="dropdown-project-tag">${b.industry || ''}</span>
+          </a>` : '';
+
+        return `
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">${b.name}</span>
+            ${projects.length > 0 ? projectLinks.join('') : soonLink}
+          </div>`;
+      }).join('');
+
+    } catch(e) {
+      console.log('Brands load skipped:', e.message);
+    }
+  }
+
+  // Run all loaders
+  Promise.all([loadSettings(), loadProjects()]).then(() => {
+    loadBrands();
+    loadSocial();
+  });
 
   // Netlify Identity — redirect to admin after login
   if (window.netlifyIdentity) {
