@@ -2045,11 +2045,18 @@
       // --- ABOUT SECTION ---
       const aboutCols = document.querySelectorAll('.about-col');
       if (aboutCols.length >= 3) {
-        // Col 1: Designer info
-        if (s.location) {
-          const sub1 = aboutCols[0].querySelector('.about-col-sub');
-          if (sub1) sub1.innerHTML = `Ho Chi Minh City<br>Available Worldwide`;
-        }
+        // Col 1: Designer
+        const content1 = aboutCols[0].querySelector('.about-col-content');
+        const sub1     = aboutCols[0].querySelector('.about-col-sub');
+        if (content1 && s.about_designer) content1.innerHTML = s.about_designer.replace(/\n/g,'<br>');
+        if (sub1 && s.location)           sub1.innerHTML = `${s.location}<br>Available Worldwide`;
+
+        // Col 2: Expertise
+        const content2 = aboutCols[1].querySelector('.about-col-content');
+        const sub2     = aboutCols[1].querySelector('.about-col-sub');
+        if (content2 && s.about_expertise)     content2.innerHTML = s.about_expertise.replace(/\n/g,'<br>');
+        if (sub2 && s.about_expertise_sub)     sub2.innerHTML = s.about_expertise_sub.replace(/\n/g,'<br>');
+
         // Col 3: Contact
         const content3 = aboutCols[2].querySelector('.about-col-content');
         const sub3     = aboutCols[2].querySelector('.about-col-sub');
@@ -2060,6 +2067,16 @@
           const loc = s.location  ? s.location : '';
           sub3.innerHTML = [ig, be, loc].filter(Boolean).join('<br>');
         }
+      }
+
+      // --- FOOTER DESC ---
+      if (s.footer_desc) {
+        const fd = document.querySelector('.footer-desc');
+        if (fd) fd.innerHTML = s.footer_desc.replace(/\n/g,'<br>');
+      }
+      if (s.footer_year && s.logo_name) {
+        const fc = document.getElementById('footerCopyright');
+        if (fc) fc.textContent = `© ${s.footer_year} ${s.logo_name}. All rights reserved.`;
       }
 
       // --- SOCIAL SECTION handle ---
@@ -2245,7 +2262,13 @@
       socialData.sort((a,b) => (a.order||99) - (b.order||99));
 
       const strip = document.getElementById('socialStrip');
-      if (!strip || socialData.length === 0) return;
+      if (!strip) return;
+
+      if (socialData.length === 0) {
+        // Giữ placeholder mặc định, không xóa
+        return;
+      }
+
       strip.innerHTML = socialData.map(s => {
         const img = resolveImg(s.image);
         const imgHTML = img

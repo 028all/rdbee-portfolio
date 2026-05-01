@@ -33,6 +33,15 @@ collections:
             required: false
             hint: "Tỉ lệ khuyên dùng: 3:4 hoặc 2:3. Tối thiểu 1200px chiều cao."
 
+          # ── FOOTER ──
+          - { label: "Footer — Mô tả ngắn", name: "footer_desc", widget: "text", default: "Branding Designer\nHook up with Beauty\nCosmetics · Beauty · Fashion" }
+          - { label: "Footer — Copyright năm", name: "footer_year", widget: "string", default: "2025" }
+
+          # ── ABOUT SECTION ──
+          - { label: "About — Dòng 1 (Designer)", name: "about_designer", widget: "text", default: "Crafting visual identities for beauty & fashion brands." }
+          - { label: "About — Expertise", name: "about_expertise", widget: "text", default: "Brand Identity\nPackaging Design\nArt Direction" }
+          - { label: "About — Expertise phụ", name: "about_expertise_sub", widget: "text", default: "Social Content\nVisual Strategy" }
+
   # ============================================================
   # PROJECTS
   # ============================================================
