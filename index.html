@@ -1277,7 +1277,7 @@
   </div>
 </div>
 <header>
-  <a href="#" class="logo">Rd Bee</a>
+  <a href="#" class="logo" id="siteLogo">Rd Bee</a>
   <nav id="mainNav">
     <a href="#work" onclick="closeMenu()">Work</a>
     <div class="nav-dropdown" id="brandsDropdown">
@@ -1406,19 +1406,19 @@
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" style="display:none;" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <span class="header-right">Available for Projects</span>
+  <span class="header-right" id="siteStatus">Available for Projects</span>
 </header>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <p class="hero-eyebrow fade-in">Branding Designer — Hook up with Beauty</p>
+    <p class="hero-eyebrow fade-in" id="heroEyebrow">Branding Designer — Hook up with Beauty</p>
     <h1 class="hero-title fade-in fade-in-delay-1">Visual<br>Brand<br><em>Identity</em></h1>
-    <p class="hero-desc fade-in fade-in-delay-2">Specialising in beauty,<br>cosmetics & fashion.<br>Crafting images that sell.</p>
+    <p class="hero-desc fade-in fade-in-delay-2" id="heroDesc">Specialising in beauty,<br>cosmetics & fashion.<br>Crafting images that sell.</p>
   </div>
-  <div class="hero-right">
+  <div class="hero-right" id="heroRight">
     <div class="img-placeholder tone-1" style="height:100%;font-size:10px;letter-spacing:0.2em;">Hero Image</div>
-    <span class="hero-img-label">Featured — 2024</span>
+    <span class="hero-img-label">Featured — 2025</span>
   </div>
 </section>
 
@@ -2010,6 +2010,83 @@
       closePackage();
     }
   });
+  // =============================================
+  // LOAD CMS DATA FROM GITHUB
+  // =============================================
+  const GITHUB_USER = '028all';
+  const GITHUB_REPO = 'rdbee-portfolio';
+  const GITHUB_BRANCH = 'main';
+  const RAW_BASE = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
+
+  async function loadSettings() {
+    try {
+      const res = await fetch(`${RAW_BASE}/data/settings.json?t=${Date.now()}`);
+      if (!res.ok) return;
+      const s = await res.json();
+
+      // Logo
+      if (s.logo_name) {
+        document.getElementById('siteLogo').textContent = s.logo_name;
+      }
+      // Status header
+      if (s.status) {
+        document.getElementById('siteStatus').textContent = s.status;
+      }
+      // Hero eyebrow (tagline)
+      if (s.tagline) {
+        document.getElementById('heroEyebrow').textContent = s.tagline;
+      }
+      // Hero desc
+      if (s.hero_desc) {
+        const descEl = document.getElementById('heroDesc');
+        descEl.innerHTML = s.hero_desc.replace(/\n/g, '<br>');
+      }
+      // Hero image
+      if (s.hero_image && s.hero_image.trim() !== '') {
+        const heroRight = document.getElementById('heroRight');
+        const imgSrc = s.hero_image.startsWith('http')
+          ? s.hero_image
+          : `${RAW_BASE}${s.hero_image}`;
+        heroRight.innerHTML = `
+          <img src="${imgSrc}" alt="Hero" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.88;">
+          <span class="hero-img-label">Featured — 2025</span>
+        `;
+      }
+      // About email
+      if (s.email) {
+        const aboutContent = document.querySelector('.about-col:last-child .about-col-content');
+        if (aboutContent) aboutContent.innerHTML = s.email;
+      }
+      // About social links
+      if (s.instagram || s.behance) {
+        const aboutSub = document.querySelector('.about-col:last-child .about-col-sub');
+        if (aboutSub) {
+          aboutSub.innerHTML = `
+            ${s.instagram ? `Instagram: <a href="https://www.instagram.com/${s.instagram.replace('@','')}" target="_blank" style="color:var(--black);text-decoration:none;">${s.instagram}</a>` : ''}
+            ${s.behance ? `<br><a href="${s.behance}" target="_blank" style="color:var(--black);text-decoration:none;">Behance: rdbee</a>` : ''}
+            ${s.location ? `<br>${s.location}` : ''}
+          `;
+        }
+      }
+      // Footer email link
+      if (s.email) {
+        const footerEmail = document.querySelector('.footer-links a[href^="hello"]');
+        if (footerEmail) footerEmail.textContent = s.email;
+      }
+      // Social section handle
+      if (s.instagram) {
+        const socialHandle = document.querySelector('#personal .section-count');
+        if (socialHandle) socialHandle.textContent = s.instagram;
+      }
+
+    } catch(e) {
+      console.log('Settings load skipped:', e.message);
+    }
+  }
+
+  // Load data khi trang khởi động
+  loadSettings();
+
   // Netlify Identity — redirect to admin after login
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on('init', user => {
