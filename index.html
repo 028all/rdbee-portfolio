@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rd Bee — Branding Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&subset=vietnamese&display=swap" rel="stylesheet">
+<!-- Netlify Identity Widget -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --mid: #9a9a9a;
+    --border: #d8d8d4;
+    --font-display: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-mono);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--black);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+  }
+  .cursor.hover {
+    width: 40px; height: 40px;
+    background: transparent;
+    border: 1px solid var(--black);
+  }
+
+  /* HEADER */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    height: 48px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+  }
+
+  nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  nav a {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--mid); }
+
+  /* BRANDS DROPDOWN */
+  .nav-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-dropdown-trigger {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    transition: color 0.2s;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--font-mono);
+    line-height: 1;
+  }
+  .nav-dropdown-trigger::after {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 4px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(45deg) translateY(-1px);
+    transition: transform 0.25s ease;
+  }
+  .nav-dropdown.open .nav-dropdown-trigger::after {
+    transform: rotate(-135deg) translateY(-1px);
+  }
+  .nav-dropdown-trigger:hover { color: var(--mid); }
+
+  .nav-dropdown-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    padding-top: 24px;
+    background: transparent;
+    min-width: 300px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%);
+    transition: opacity 0.22s ease;
+    z-index: 300;
+  }
+  .nav-dropdown.open .nav-dropdown-panel {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav-dropdown-inner {
+    background: var(--white);
+    border: 1px solid var(--border);
+    max-height: 65vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+  .nav-dropdown-inner::-webkit-scrollbar { display: none; }
+
+  .dropdown-brand {
+    border-bottom: 1px solid var(--border);
+  }
+  .dropdown-brand:last-child { border-bottom: none; }
+
+  .dropdown-brand-name {
+    display: block;
+    padding: 12px 20px 5px;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .dropdown-project-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 20px 9px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    transition: background 0.15s, color 0.15s;
+    cursor: none;
+    gap: 16px;
+  }
+  .dropdown-project-link:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+  .dropdown-project-tag {
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: var(--mid);
+    white-space: nowrap;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .dropdown-project-link:hover .dropdown-project-tag {
+    color: rgba(245,245,240,0.45);
+  }
+  .dropdown-arrow {
+    font-size: 10px;
+    opacity: 0;
+    transition: opacity 0.15s, transform 0.15s;
+    transform: translateX(-4px);
+    flex-shrink: 0;
+  }
+  .dropdown-project-link:hover .dropdown-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .header-right {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  /* HERO */
+  .hero {
+    margin-top: 48px;
+    height: calc(100vh - 48px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 6vw, 88px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    font-weight: 300;
+    color: var(--mid);
+  }
+
+  .hero-desc {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+    color: var(--mid);
+    max-width: 320px;
+    text-transform: uppercase;
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .hero-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+    display: block;
+  }
+  .hero-right:hover .hero-img { transform: scale(1.03); opacity: 0.75; }
+
+  .hero-img-label {
+    position: absolute;
+    bottom: 32px; right: 32px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.6);
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 14px 0;
+  }
+  .marquee-track {
+    display: inline-flex;
+    gap: 64px;
+    animation: marquee 30s linear infinite;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    flex-shrink: 0;
+  }
+  .marquee-dot {
+    display: inline-block;
+    width: 4px; height: 4px;
+    background: var(--mid);
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 0 32px;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .section-count {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--mid);
+  }
+
+  /* PROJECTS GRID */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-card {
+    position: relative;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    cursor: none;
+    text-decoration: none;
+    display: block;
+    background: var(--black);
+  }
+  .project-card:nth-child(3n) { border-right: none; }
+
+  .project-img-wrap {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+
+  .project-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.5s ease;
+    display: block;
+  }
+  .project-card:hover .project-img { transform: scale(1.05); opacity: 0.7; }
+
+  .project-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px 20px;
+    background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 100%);
+    transform: translateY(8px);
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+  .project-card:hover .project-info { opacity: 1; transform: translateY(0); }
+
+  .project-category {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.55);
+    margin-bottom: 6px;
+  }
+  .project-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  /* FEATURED ROW */
+  .featured-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .featured-card {
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    text-decoration: none;
+    display: block;
+    background: var(--black);
+    border-right: 1px solid var(--border);
+  }
+  .featured-card:last-child { border-right: none; }
+
+  .featured-img-wrap { aspect-ratio: 16/10; overflow: hidden; }
+  .featured-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.88;
+    transition: transform 0.8s ease, opacity 0.5s ease;
+    display: block;
+  }
+  .featured-card:hover .featured-img { transform: scale(1.04); opacity: 0.7; }
+
+  .featured-meta {
+    position: absolute;
+    top: 24px; left: 24px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.6);
+    background: rgba(10,10,10,0.4);
+    padding: 4px 10px;
+  }
+
+  .featured-info {
+    padding: 20px 24px;
+    background: var(--black);
+    border-top: 1px solid rgba(245,245,240,0.08);
+  }
+  .featured-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+  .featured-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .about-col {
+    padding: 48px 36px;
+    border-right: 1px solid var(--border);
+  }
+  .about-col:last-child { border-right: none; }
+  .about-col-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 20px;
+  }
+  .about-col-content {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .about-col-sub {
+    margin-top: 16px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    line-height: 1.9;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+
+  /* SOCIAL STRIP */
+  .social-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+  .social-item {
+    border-right: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+    cursor: none;
+  }
+  .social-item:last-child { border-right: none; }
+  .social-img-wrap { aspect-ratio: 1/1; overflow: hidden; background: var(--black); }
+  .social-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: transform 0.5s ease, opacity 0.4s ease;
+    display: block;
+  }
+  .social-item:hover .social-img { transform: scale(1.06); opacity: 0.65; }
+  .social-label {
+    padding: 12px 16px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  /* FOOTER */
+  footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 40px 28px 32px;
+    border-top: 1px solid var(--border);
+    gap: 40px;
+  }
+  .footer-logo {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .footer-desc {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+  .footer-col-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 16px;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--mid); }
+  .footer-bottom {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  /* PLACEHOLDER IMAGES */
+  .img-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.15);
+    background: var(--black);
+  }
+  .tone-1 { background: #111; }
+  .tone-2 { background: #1a1a18; }
+  .tone-3 { background: #0f0f0f; }
+  .tone-4 { background: #161614; }
+  .tone-5 { background: #131313; }
+  .tone-6 { background: #0d0d0d; }
+
+  /* PROJECT PAGE (hidden by default) */
+  .project-page {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--white);
+    z-index: 200;
+    overflow-y: auto;
+  }
+  .project-page.open { display: block; }
+
+  .project-page-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    height: 48px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+  }
+
+  .back-btn {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: none;
+    background: none;
+    border: none;
+    color: var(--black);
+    transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--mid); }
+
+  .project-page-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-page-img {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--black);
+    border-right: 1px solid var(--border);
+  }
+
+  .project-page-meta {
+    padding: 64px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .project-page-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 20px;
+  }
+
+  .project-page-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 40px;
+  }
+
+  .project-page-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .info-item-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+  .info-item-val {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .project-page-desc {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+    color: var(--mid);
+    text-transform: uppercase;
+    max-width: 360px;
+  }
+
+  .project-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid var(--border);
+  }
+  .gallery-img {
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .gallery-img:nth-child(3n) { border-right: none; }
+  .gallery-img-inner {
+    aspect-ratio: 3/4;
+  }
+
+  /* FADE IN */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { animation: fadeUp 0.9s ease forwards; opacity: 0; }
+  .fade-in-delay-1 { animation-delay: 0.15s; }
+  .fade-in-delay-2 { animation-delay: 0.3s; }
+  .fade-in-delay-3 { animation-delay: 0.45s; }
+
+  /* LOAD MORE */
+  .project-card.hidden-card { display: none; }
+
+  .load-more-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+  }
+  .load-more-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    color: var(--black);
+    cursor: none;
+    transition: color 0.2s;
+    font-family: var(--font-mono);
+    padding: 0;
+  }
+  .load-more-btn:hover { color: var(--mid); }
+  .load-more-arrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .load-more-arrow span {
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.25s ease;
+  }
+  .load-more-btn:hover .load-more-arrow span { width: 40px; }
+  .load-more-count {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+
+  /* =============================================
+     DESIGN PACKAGE PAGE
+  ============================================= */
+  .pkg-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    min-height: 60vh;
+  }
+  .pkg-hero-text {
+    padding: 64px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-right: 1px solid var(--border);
+  }
+  .pkg-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 20px;
+  }
+  .pkg-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+  }
+  .pkg-tagline {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+    color: var(--mid);
+    text-transform: uppercase;
+    max-width: 360px;
+  }
+  .pkg-hero-img {
+    min-height: 400px;
+  }
+
+  /* INTRO ROW */
+  .pkg-intro-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 1px solid var(--border);
+    padding: 48px;
+    gap: 48px;
+  }
+  .pkg-intro-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding-top: 4px;
+  }
+  .pkg-intro-text {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    color: var(--black);
+    max-width: 700px;
+  }
+
+  /* PRICING PLANS */
+  .pkg-pricing-section { border-bottom: 1px solid var(--border); }
+  .pkg-plans {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border);
+  }
+  .pkg-plan {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .pkg-plan:last-child { border-right: none; }
+  .pkg-plan-tier {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 16px;
+  }
+  .pkg-plan-name {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+    margin-bottom: 32px;
+  }
+  .pkg-plan-price {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  .pkg-plan-price-note {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 36px;
+  }
+  .pkg-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 28px;
+  }
+  .pkg-plan-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+  }
+  .pkg-plan-items li {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .pkg-plan-items li::before {
+    content: '→';
+    font-size: 10px;
+    color: var(--mid);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .pkg-plan-cta {
+    margin-top: 40px;
+    display: inline-block;
+    padding: 14px 28px;
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    cursor: none;
+    align-self: flex-start;
+    border: 1px solid var(--black);
+  }
+  .pkg-plan-cta:hover {
+    background: transparent;
+    color: var(--black);
+  }
+  .pkg-plan.featured-plan {
+    background: var(--black);
+    color: var(--white);
+  }
+  .pkg-plan.featured-plan .pkg-plan-tier,
+  .pkg-plan.featured-plan .pkg-plan-price-note { color: rgba(245,245,240,0.45); }
+  .pkg-plan.featured-plan .pkg-divider { background: rgba(245,245,240,0.12); }
+  .pkg-plan.featured-plan .pkg-plan-items li::before { color: rgba(245,245,240,0.4); }
+  .pkg-plan.featured-plan .pkg-plan-cta {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+  }
+  .pkg-plan.featured-plan .pkg-plan-cta:hover {
+    background: transparent;
+    color: var(--white);
+  }
+
+  /* PACKAGE GALLERY */
+  .pkg-gallery-section {}
+  .pkg-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+  }
+  .pkg-gallery-item {
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .pkg-gallery-item:nth-child(3n) { border-right: none; }
+  .pkg-gallery-item:nth-child(n+4) { border-bottom: none; }
+  .pkg-gallery-inner {
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,245,240,0.15);
+    transition: transform 0.5s ease;
+  }
+  .pkg-gallery-item:hover .pkg-gallery-inner { transform: scale(1.04); }
+
+  /* RESPONSIVE — Package page */
+  @media (max-width: 1024px) {
+    .pkg-hero { grid-template-columns: 1fr; min-height: auto; }
+    .pkg-hero-text { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 28px; }
+    .pkg-hero-img { min-height: 45vw; }
+    .pkg-intro-row { grid-template-columns: 1fr; padding: 32px 28px; gap: 16px; }
+    .pkg-plans { grid-template-columns: 1fr; }
+    .pkg-plan { border-right: none; border-bottom: 1px solid var(--border); padding: 36px 28px; }
+    .pkg-plan:last-child { border-bottom: none; }
+    .pkg-gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .pkg-hero-text { padding: 32px 16px; }
+    .pkg-intro-row { padding: 24px 16px; }
+    .pkg-plan { padding: 28px 16px; }
+    .pkg-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .pkg-gallery-item:nth-child(3n) { border-right: 1px solid var(--border); }
+    .pkg-gallery-item:nth-child(2n) { border-right: none; }
+    .pkg-gallery-item:nth-child(n+4) { border-bottom: 1px solid var(--border); }
+    .pkg-gallery-item:nth-child(n+5) { border-bottom: none; }
+  }
+
+  /* =============================================
+     RESPONSIVE — TABLET (≤ 1024px)
+  ============================================= */
+  @media (max-width: 1024px) {
+    header { padding: 0 20px; }
+    .header-right { display: none; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: calc(100vh - 48px);
+    }
+    .hero-left {
+      padding: 48px 28px 40px;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      justify-content: flex-end;
+      min-height: 50vh;
+    }
+    .hero-right { min-height: 50vw; }
+
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-card:nth-child(3n) { border-right: 1px solid var(--border); }
+    .project-card:nth-child(2n) { border-right: none; }
+
+    .featured-row { grid-template-columns: 1fr; }
+    .featured-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .featured-card:last-child { border-bottom: none; }
+
+    .about-strip { grid-template-columns: 1fr 1fr; }
+    .about-col:last-child {
+      grid-column: 1 / -1;
+      border-right: none;
+      border-top: 1px solid var(--border);
+    }
+
+    .social-strip { grid-template-columns: repeat(2, 1fr); }
+    .social-item:nth-child(2n) { border-right: none; }
+
+    footer { grid-template-columns: 1fr 1fr; padding: 32px 20px 24px; gap: 28px; }
+    .footer-bottom { grid-column: 1 / -1; }
+
+    .project-page-hero { grid-template-columns: 1fr; }
+    .project-page-img { border-right: none; border-bottom: 1px solid var(--border); aspect-ratio: 16/9; }
+    .project-page-meta { padding: 40px 28px; }
+    .project-gallery { grid-template-columns: repeat(2, 1fr); }
+    .gallery-img:nth-child(3n) { border-right: 1px solid var(--border); }
+    .gallery-img:nth-child(2n) { border-right: none; }
+  }
+
+  /* =============================================
+     RESPONSIVE — MOBILE (≤ 640px)
+  ============================================= */
+  @media (max-width: 640px) {
+    body { cursor: auto; }
+    .cursor { display: none; }
+
+    header { padding: 0 16px; height: 52px; }
+    .logo { font-size: 12px; }
+
+    nav {
+      position: fixed;
+      top: 52px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+      z-index: 99;
+    }
+    nav.mobile-open { max-height: 100vh; overflow-y: auto; }
+
+    nav a, .nav-dropdown-trigger {
+      display: block;
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 11px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-dropdown { width: 100%; flex-direction: column; align-items: flex-start; }
+    .nav-dropdown-trigger { width: 100%; text-align: left; }
+    .nav-dropdown-panel {
+      position: static;
+      transform: none;
+      padding-top: 0;
+      opacity: 1;
+      pointer-events: all;
+      min-width: 100%;
+      max-height: none;
+      display: none;
+    }
+    .nav-dropdown.open .nav-dropdown-panel { display: block; }
+    .nav-dropdown-inner { box-shadow: none; border: none; border-top: 1px solid var(--border); }
+    .dropdown-brand-name { padding: 10px 20px 4px; }
+    .dropdown-project-link { padding: 10px 28px; }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--black);
+      transition: all 0.25s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .hero { min-height: auto; }
+    .hero-left { padding: 40px 16px 32px; min-height: auto; }
+    .hero-right { min-height: 60vw; }
+    .hero-title { font-size: clamp(44px, 12vw, 64px); }
+
+    .section-header { padding: 20px 16px 16px; }
+
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card { border-right: none !important; }
+
+    .featured-row { grid-template-columns: 1fr; }
+
+    .about-strip { grid-template-columns: 1fr; }
+    .about-col { border-right: none !important; border-bottom: 1px solid var(--border); padding: 32px 16px; }
+    .about-col:last-child { border-bottom: none; }
+
+    .social-strip { grid-template-columns: repeat(2, 1fr); }
+
+    footer { grid-template-columns: 1fr; padding: 28px 16px 20px; gap: 24px; }
+    .footer-bottom { flex-direction: column; gap: 8px; align-items: flex-start; }
+
+    .project-page-header { padding: 0 16px; }
+    .project-page-img { aspect-ratio: 4/3; }
+    .project-page-meta { padding: 28px 16px; }
+    .project-page-title { font-size: clamp(32px, 9vw, 52px); }
+    .project-page-info { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .project-gallery { grid-template-columns: 1fr; }
+    .gallery-img { border-right: none !important; }
+
+    .load-more-bar { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- PROJECT DETAIL PAGE (overlay) -->
+<div class="project-page" id="projectPage">
+  <div class="project-page-header">
+    <button class="back-btn" onclick="closeProject()">← Back to Work</button>
+    <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">Portfolio</span>
+    <span style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid)" id="projectCounter">01 / 06</span>
+  </div>
+
+  <div class="project-page-hero">
+    <div class="project-page-img" id="ppHeroImg">
+      <div class="img-placeholder tone-2" style="height:100%;font-size:10px;">Image</div>
+    </div>
+    <div class="project-page-meta">
+      <p class="project-page-eyebrow" id="ppEyebrow">Brand Identity</p>
+      <h2 class="project-page-title" id="ppTitle">Project Name</h2>
+      <div class="project-page-info">
+        <div>
+          <div class="info-item-label">Client</div>
+          <div class="info-item-val" id="ppClient">—</div>
+        </div>
+        <div>
+          <div class="info-item-label">Year</div>
+          <div class="info-item-val" id="ppYear">—</div>
+        </div>
+        <div>
+          <div class="info-item-label">Scope</div>
+          <div class="info-item-val" id="ppScope">—</div>
+        </div>
+        <div>
+          <div class="info-item-label">Industry</div>
+          <div class="info-item-val" id="ppIndustry">—</div>
+        </div>
+      </div>
+      <p class="project-page-desc" id="ppDesc">—</p>
+    </div>
+  </div>
+
+  <div class="project-gallery" id="ppGallery">
+    <div class="gallery-img"><div class="gallery-img-inner img-placeholder tone-1"></div></div>
+    <div class="gallery-img"><div class="gallery-img-inner img-placeholder tone-3"></div></div>
+    <div class="gallery-img"><div class="gallery-img-inner img-placeholder tone-4"></div></div>
+    <div class="gallery-img"><div class="gallery-img-inner img-placeholder tone-2"></div></div>
+    <div class="gallery-img"><div class="gallery-img-inner img-placeholder tone-5"></div></div>
+    <div class="gallery-img"><div class="gallery-img-inner img-placeholder tone-6"></div></div>
+  </div>
+</div>
+
+<!-- DESIGN PACKAGE PAGE (overlay) -->
+<div class="project-page" id="packagePage">
+  <div class="project-page-header">
+    <button class="back-btn" onclick="closePackage()">← Back</button>
+    <span style="font-family:var(--font-display);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;" id="pkgHeaderTitle">Design Package</span>
+    <span style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);font-family:var(--font-mono);">Rd Bee Studio</span>
+  </div>
+
+  <div class="pkg-hero">
+    <div class="pkg-hero-text">
+      <p class="pkg-eyebrow" id="pkgEyebrow">Design Package</p>
+      <h1 class="pkg-title" id="pkgTitle">Basic Package<br>for New Founders</h1>
+      <p class="pkg-tagline" id="pkgTagline">—</p>
+    </div>
+    <div class="pkg-hero-img tone-2 img-placeholder">Hero Image</div>
+  </div>
+
+  <div class="pkg-intro-row">
+    <div class="pkg-intro-label">Overview</div>
+    <div class="pkg-intro-text" id="pkgIntro">—</div>
+  </div>
+
+  <div class="pkg-pricing-section">
+    <div class="section-header">
+      <span class="section-label">Choose Your Plan</span>
+      <span class="section-count" id="pkgPlanCount">02 Plans</span>
+    </div>
+    <div class="pkg-plans" id="pkgPlans"></div>
+  </div>
+
+  <div class="pkg-gallery-section">
+    <div class="section-header">
+      <span class="section-label">Creative References</span>
+    </div>
+    <div class="pkg-gallery-grid" id="pkgGallery"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════ -->
+<header>
+  <a href="#" class="logo">Rd Bee</a>
+  <nav id="mainNav">
+    <a href="#work" onclick="closeMenu()">Work</a>
+    <div class="nav-dropdown" id="brandsDropdown">
+      <button class="nav-dropdown-trigger" id="brandsTrigger">Brands</button>
+      <div class="nav-dropdown-panel" id="brandsPanel">
+        <div class="nav-dropdown-inner">
+
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">KT Centre Group</span>
+            <a class="dropdown-project-link" href="#" onclick="return false;">
+              <span>Monthly Beauty Poster Series</span>
+              <span style="display:flex;align-items:center;gap:8px;">
+                <span class="dropdown-project-tag">Branding</span>
+                <span class="dropdown-arrow">→</span>
+              </span>
+            </a>
+            <a class="dropdown-project-link" href="#" onclick="openProject(3); closeBrands(); return false;">
+              <span>Premium Menu Design</span>
+              <span style="display:flex;align-items:center;gap:8px;">
+                <span class="dropdown-project-tag">Print &amp; Packaging</span>
+                <span class="dropdown-arrow">→</span>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">Ryo Vietnam</span>
+            <a class="dropdown-project-link" href="#" onclick="return false;">
+              <span>Visual Design System</span>
+              <span style="display:flex;align-items:center;gap:8px;">
+                <span class="dropdown-project-tag">Multi-service Platform</span>
+                <span class="dropdown-arrow">→</span>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">Porêves</span>
+            <a class="dropdown-project-link" href="#" onclick="return false;">
+              <span>Brand Identity &amp; Packaging</span>
+              <span style="display:flex;align-items:center;gap:8px;">
+                <span class="dropdown-project-tag">Cosmetics</span>
+                <span class="dropdown-arrow">→</span>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">Simla Piercing</span>
+            <a class="dropdown-project-link" href="#" onclick="return false;" style="opacity:0.38;pointer-events:none;">
+              <span>Coming Soon</span>
+              <span class="dropdown-project-tag">Piercing Studio</span>
+            </a>
+          </div>
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">Nepherteti</span>
+            <a class="dropdown-project-link" href="#" onclick="return false;" style="opacity:0.38;pointer-events:none;">
+              <span>Coming Soon</span>
+              <span class="dropdown-project-tag">Beauty</span>
+            </a>
+          </div>
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">Enuff Studio</span>
+            <a class="dropdown-project-link" href="#" onclick="return false;" style="opacity:0.38;pointer-events:none;">
+              <span>Coming Soon</span>
+              <span class="dropdown-project-tag">Creative Studio</span>
+            </a>
+          </div>
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">Silver Haus</span>
+            <a class="dropdown-project-link" href="#" onclick="return false;" style="opacity:0.38;pointer-events:none;">
+              <span>Coming Soon</span>
+              <span class="dropdown-project-tag">Lifestyle</span>
+            </a>
+          </div>
+          <div class="dropdown-brand">
+            <span class="dropdown-brand-name">Gravity Pilates</span>
+            <a class="dropdown-project-link" href="#" onclick="return false;" style="opacity:0.38;pointer-events:none;">
+              <span>Coming Soon</span>
+              <span class="dropdown-project-tag">Wellness</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-dropdown" id="packageDropdown">
+      <button class="nav-dropdown-trigger" id="packageTrigger">Design Package</button>
+      <div class="nav-dropdown-panel" id="packagePanel">
+        <div class="nav-dropdown-inner">
+          <div class="dropdown-brand">
+
+            <a class="dropdown-project-link" href="#" onclick="openPackage('basic'); closePackageMenu(); return false;">
+              <span>Basic Package for New Founders</span>
+              <span style="display:flex;align-items:center;gap:8px;">
+                <span class="dropdown-project-tag">Branding Starter</span>
+                <span class="dropdown-arrow">→</span>
+              </span>
+            </a>
+            <a class="dropdown-project-link" href="#" onclick="openPackage('social'); closePackageMenu(); return false;">
+              <span>Building Social Media with Short Videos</span>
+              <span style="display:flex;align-items:center;gap:8px;">
+                <span class="dropdown-project-tag">Social &amp; Video</span>
+                <span class="dropdown-arrow">→</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#personal" onclick="closeMenu()">Personal</a>
+    <a href="#about" onclick="closeMenu()">About</a>
+  </nav>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" style="display:none;" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <span class="header-right">Available for Projects</span>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow fade-in">Branding Designer — Hook up with Beauty</p>
+    <h1 class="hero-title fade-in fade-in-delay-1">Visual<br>Brand<br><em>Identity</em></h1>
+    <p class="hero-desc fade-in fade-in-delay-2">Specialising in beauty,<br>cosmetics &amp; fashion.<br>Crafting images that sell.</p>
+  </div>
+  <div class="hero-right">
+    
+    <div class="img-placeholder tone-1" style="height:100%;font-size:10px;letter-spacing:0.2em;">Hero Image</div>
+    <span class="hero-img-label">Featured — 2025</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">Brand Identity</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Visual Design</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Cosmetics</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Beauty</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Fashion</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Packaging</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Art Direction</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Social Content</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Brand Identity</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Visual Design</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Cosmetics</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Beauty</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Fashion</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Packaging</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Art Direction</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Social Content</span><span class="marquee-dot"></span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PROJECTS SECTION
+═══════════════════════════════════════════ -->
+<div id="work">
+  <div class="section-header">
+    <span class="section-label">Selected Work</span>
+    <span class="section-count">07 Projects</span>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid">
+    
+    <a class="project-card" href="#" onclick="openProject(0); return false;">
+      <div class="project-img-wrap"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/ccd661244480781.69997b85987fb.png" alt="KT Centre Group" style="width:100%;height:100%;object-fit:cover;opacity:0.9;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.5s ease;display:block;"></div>
+      <div class="project-info">
+        <p class="project-category">Beauty Institute — Branding</p>
+        <h3 class="project-name">KT<br>Centre<br>Group</h3>
+      </div>
+    </a>
+    <a class="project-card" href="#" onclick="openProject(1); return false;">
+      <div class="project-img-wrap"><div class="img-placeholder tone-2" style="height:100%;">Image</div></div>
+      <div class="project-info">
+        <p class="project-category">Multi-service Platform — Visual</p>
+        <h3 class="project-name">Ryo<br>Việt<br>Nam</h3>
+      </div>
+    </a>
+    <a class="project-card" href="#" onclick="openProject(2); return false;">
+      <div class="project-img-wrap"><div class="img-placeholder tone-3" style="height:100%;">Image</div></div>
+      <div class="project-info">
+        <p class="project-category">Cosmetics — Brand Identity</p>
+        <h3 class="project-name">Porêves<br>Cosmetic</h3>
+      </div>
+    </a>
+    <a class="project-card" href="#" onclick="openProject(3); return false;">
+      <div class="project-img-wrap"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/8a86f8228565177.6856356435ec3.png" alt="Premium Menu Design" style="width:100%;height:100%;object-fit:cover;opacity:0.9;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.5s ease;display:block;"></div>
+      <div class="project-info">
+        <p class="project-category">Print &amp; Packaging — KT BMC</p>
+        <h3 class="project-name">Premium<br>Menu<br>Design</h3>
+      </div>
+    </a>
+    <a class="project-card" href="#" onclick="openProject(4); return false;">
+      <div class="project-img-wrap"><div class="img-placeholder tone-5" style="height:100%;">Image</div></div>
+      <div class="project-info">
+        <p class="project-category">Coming Soon</p>
+        <h3 class="project-name">Coming<br>Soon</h3>
+      </div>
+    </a>
+    <a class="project-card" href="#" onclick="openProject(5); return false;">
+      <div class="project-img-wrap"><div class="img-placeholder tone-6" style="height:100%;">Image</div></div>
+      <div class="project-info">
+        <p class="project-category">Coming Soon</p>
+        <h3 class="project-name">Coming<br>Soon</h3>
+      </div>
+    </a>
+    <a class="project-card hidden-card" href="#" onclick="openProject(6); return false;">
+      <div class="project-img-wrap"><div class="img-placeholder tone-1" style="height:100%;">Image</div></div>
+      <div class="project-info">
+        <p class="project-category">Coming Soon</p>
+        <h3 class="project-name">Coming<br>Soon</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="load-more-bar" id="loadMoreBar" style="display:flex">
+    <button class="load-more-btn" onclick="toggleProjects()">
+      <span id="loadMoreText">View All Projects</span>
+      <span class="load-more-arrow"><span></span>→</span>
+    </button>
+    <span class="load-more-count" id="loadMoreCount">+1 more</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FEATURED EDITORIAL PAIR
+═══════════════════════════════════════════ -->
+<div id="brands">
+  <div class="section-header">
+    <span class="section-label">In Focus</span>
+    <span class="section-count">Campaign Work</span>
+  </div>
+  <div class="featured-row" id="featuredRow">
+    
+    <a class="featured-card" href="#" onclick="openProject(0); return false;">
+      <div class="featured-img-wrap"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/ccd661244480781.69997b85987fb.png" alt="KT Centre Group" style="width:100%;height:100%;object-fit:cover;opacity:0.88;transition:transform 0.8s ease,opacity 0.5s ease;display:block;"></div>
+      <div class="featured-meta">Beauty Institute — Branding</div>
+      <div class="featured-info">
+        <p class="featured-eyebrow">Brand Identity, Visual System</p>
+        <h3 class="featured-title">KT Centre Group</h3>
+      </div>
+    </a>
+    <a class="featured-card" href="#" onclick="openProject(2); return false;">
+      <div class="featured-img-wrap"><div class="img-placeholder tone-3" style="height:100%;">Campaign Image</div></div>
+      <div class="featured-meta">Cosmetics — Brand Identity</div>
+      <div class="featured-info">
+        <p class="featured-eyebrow">Brand Identity, Packaging</p>
+        <h3 class="featured-title">Porêves Cosmetic</h3>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT STRIP
+═══════════════════════════════════════════ -->
+<div id="about">
+  <div class="section-header">
+    <span class="section-label">About</span>
+  </div>
+  <div class="about-strip">
+    
+    <div class="about-col">
+      <p class="about-col-label">Designer</p>
+      <p class="about-col-content">Crafting visual<br>identities for beauty<br>&amp; fashion brands.</p>
+      <p class="about-col-sub">Ho Chi Minh City<br>Available Worldwide</p>
+    </div>
+    <div class="about-col">
+      <p class="about-col-label">Expertise</p>
+      <p class="about-col-content">Brand Identity<br>Packaging Design<br>Art Direction</p>
+      <p class="about-col-sub">Social Content<br>Visual Strategy</p>
+    </div>
+    <div class="about-col">
+      <p class="about-col-label">Contact</p>
+      <p class="about-col-content" id="aboutEmail">hello@rdbee.design</p>
+      <p class="about-col-sub">Instagram: <a href="https://www.instagram.com/nnhanlee" target="_blank" style="color:var(--black);text-decoration:none;">@nnhanlee</a><br>
+      <a href="https://www.behance.net/rdbee" target="_blank" style="color:var(--black);text-decoration:none;">Behance: rdbee</a><br>
+      Ho Chi Minh City, Vietnam</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SOCIAL STRIP
+═══════════════════════════════════════════ -->
+<div id="personal">
+  <div class="section-header">
+    <span class="section-label">Social</span>
+    <span class="section-count">@nnhanlee</span>
+  </div>
+  <div class="social-strip" id="socialStrip">
+    
+    <div class="social-item">
+      <div class="social-img-wrap"><div class="img-placeholder tone-1" style="height:100%;">Post</div></div>
+      <p class="social-label">Beauty Editorial</p>
+    </div>
+    <div class="social-item">
+      <div class="social-img-wrap"><div class="img-placeholder tone-2" style="height:100%;">Post</div></div>
+      <p class="social-label">Fashion Campaign</p>
+    </div>
+    <div class="social-item">
+      <div class="social-img-wrap"><div class="img-placeholder tone-3" style="height:100%;">Post</div></div>
+      <p class="social-label">Brand Packaging</p>
+    </div>
+    <div class="social-item">
+      <div class="social-img-wrap"><div class="img-placeholder tone-4" style="height:100%;">Post</div></div>
+      <p class="social-label">Personal Project</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div>
+    <p class="footer-logo">Rd Bee</p>
+    <p class="footer-desc">Branding Designer<br>Hook up with Beauty<br>Cosmetics · Beauty · Fashion</p>
+  </div>
+  <div>
+    <p class="footer-col-label">Navigation</p>
+    <div class="footer-links">
+      <a href="#work">Work</a>
+      <a href="#brands">Brands</a>
+      <a href="#personal">Personal</a>
+      <a href="#about">About</a>
+    </div>
+  </div>
+  <div>
+    <p class="footer-col-label">Connect</p>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/nnhanlee" target="_blank" id="footerInstagram">Instagram</a>
+      <a href="https://www.behance.net/rdbee" target="_blank" id="footerBehance">Behance</a>
+      <a href="mailto:hello@rdbee.design" id="footerEmail">hello@rdbee.design</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Rd Bee. All rights reserved.</span>
+    <span>Ho Chi Minh City, Vietnam</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+  // ── Hamburger menu (mobile only) ──
+  const hamburger = document.getElementById('hamburger');
+  const mainNav = document.getElementById('mainNav');
+
+  function showHamburgerIfMobile() {
+    if (window.innerWidth <= 640) {
+      hamburger.style.display = 'flex';
+    } else {
+      hamburger.style.display = 'none';
+      mainNav.classList.remove('mobile-open');
+      hamburger.classList.remove('open');
+    }
+  }
+  showHamburgerIfMobile();
+  window.addEventListener('resize', showHamburgerIfMobile);
+
+  function toggleMenu() {
+    mainNav.classList.toggle('mobile-open');
+    hamburger.classList.toggle('open');
+  }
+  function closeMenu() {
+    mainNav.classList.remove('mobile-open');
+    hamburger.classList.remove('open');
+  }
+
+  // ── Mobile dropdown tap toggle ──
+  document.getElementById('brandsTrigger').addEventListener('click', function(e) {
+    if (window.innerWidth <= 640) {
+      e.preventDefault();
+      brandsDropdown.classList.toggle('open');
+    }
+  });
+
+  // ── Load more projects ──
+  let allVisible = false;
+  const hiddenCards = document.querySelectorAll('.hidden-card');
+  const loadMoreBar = document.getElementById('loadMoreBar');
+  const loadMoreText = document.getElementById('loadMoreText');
+  const loadMoreCount = document.getElementById('loadMoreCount');
+
+  if (hiddenCards.length === 0 && loadMoreBar) loadMoreBar.style.display = 'none';
+
+  function toggleProjects() {
+    allVisible = !allVisible;
+    hiddenCards.forEach(card => {
+      card.style.display = allVisible ? 'block' : 'none';
+    });
+    loadMoreText.textContent = allVisible ? 'Show Less' : 'View All Projects';
+    loadMoreCount.textContent = allVisible ? '' : `+${hiddenCards.length} more`;
+  }
+
+  // ── Dropdown Brands — JS controlled ──
+  const brandsDropdown = document.getElementById('brandsDropdown');
+  const brandsPanel = document.getElementById('brandsPanel');
+  let closeTimer = null;
+
+  function openBrands() {
+    clearTimeout(closeTimer);
+    brandsDropdown.classList.add('open');
+  }
+  function schedulClose() {
+    closeTimer = setTimeout(() => brandsDropdown.classList.remove('open'), 120);
+  }
+  function closeBrands() {
+    clearTimeout(closeTimer);
+    brandsDropdown.classList.remove('open');
+  }
+
+  brandsDropdown.addEventListener('mouseenter', openBrands);
+  brandsDropdown.addEventListener('mouseleave', schedulClose);
+  brandsPanel.addEventListener('mouseenter', openBrands);
+  brandsPanel.addEventListener('mouseleave', schedulClose);
+
+  // ── Custom Cursor ──
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .project-card, .featured-card, .social-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  // ── Projects data (injected at build time) ──
+  const projects = [
+  {
+    "title": "KT Centre Group",
+    "category": "Beauty Institute — Branding",
+    "client": "KT Beauty Medical Centre",
+    "year": "2024",
+    "scope": "Brand Identity, Visual System",
+    "industry": "Beauty Institute",
+    "description": "Full visual identity system for KT Beauty Medical Centre — a premium medical beauty institute in Ho Chi Minh City. Positioning the brand at the intersection of luxury aesthetics and clinical trust.",
+    "cover_image": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/ccd661244480781.69997b85987fb.png",
+    "hero_image": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/ccd661244480781.69997b85987fb.png",
+    "gallery": [
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/47b8f9244480781.699980ddb72af.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/ba4388244480781.69998485c0113.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/915534244480781.6999871da5b70.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/2d1e29244480781.6999cfeae4b98.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/d3bb35244480781.6999db8de769e.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/b7c13d244480781.6999e876e4c45.png"
+    ],
+    "featured": true
+  },
+  {
+    "title": "Ryo Việt Nam",
+    "category": "Multi-service Platform — Visual",
+    "client": "Ryo Vietnam",
+    "year": "2024",
+    "scope": "Visual Design, UI Direction",
+    "industry": "Tech / Super App",
+    "description": "Visual direction for Ryo — a Vietnamese multi-service platform covering food delivery, logistics, ride-hailing and e-commerce. A bold, energetic visual system built for scale.",
+    "cover_image": "",
+    "hero_image": "",
+    "gallery": [],
+    "featured": false
+  },
+  {
+    "title": "Porêves Cosmetic",
+    "category": "Cosmetics — Brand Identity",
+    "client": "Porêves",
+    "year": "2024",
+    "scope": "Brand Identity, Packaging",
+    "industry": "Cosmetics",
+    "description": "Brand identity and packaging design for Porêves — a homegrown cosmetics label. The visual language blends softness with precision, rooted in a refined feminine aesthetic.",
+    "cover_image": "",
+    "hero_image": "",
+    "gallery": [],
+    "featured": true
+  },
+  {
+    "title": "Premium Menu Design",
+    "category": "Print & Packaging — KT BMC",
+    "client": "KT Beauty Medical Centre",
+    "year": "2025",
+    "scope": "Print Design, Packaging, In ấn",
+    "industry": "Beauty Institute",
+    "description": "Premium aesthetic menu and collateral print design for KT Beauty Medical Centre. A luxury service catalogue built around refined typography, editorial layout, and high-end production finish.",
+    "cover_image": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/8a86f8228565177.6856356435ec3.png",
+    "hero_image": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/8a86f8228565177.6856356435ec3.png",
+    "gallery": [
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/a58f2b228565177.6858c9ee470c2.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/2e7d6c228565177.6858c135c36ca.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/8a86f8228565177.6856356435ec3.png"
+    ],
+    "featured": false
+  },
+  {
+    "title": "Coming Soon",
+    "category": "Coming Soon",
+    "client": "—",
+    "year": "—",
+    "scope": "—",
+    "industry": "—",
+    "description": "Project coming soon.",
+    "cover_image": "",
+    "hero_image": "",
+    "gallery": [],
+    "featured": false
+  },
+  {
+    "title": "Coming Soon",
+    "category": "Coming Soon",
+    "client": "—",
+    "year": "—",
+    "scope": "—",
+    "industry": "—",
+    "description": "Project coming soon.",
+    "cover_image": "",
+    "hero_image": "",
+    "gallery": [],
+    "featured": false
+  },
+  {
+    "title": "Coming Soon",
+    "category": "Coming Soon",
+    "client": "—",
+    "year": "—",
+    "scope": "—",
+    "industry": "—",
+    "description": "Project coming soon.",
+    "cover_image": "",
+    "hero_image": "",
+    "gallery": [],
+    "featured": false
+  }
+];
+
+  function openProject(idx) {
+    const p = projects[idx];
+    if (!p) return;
+    const total = projects.length;
+    document.getElementById('ppEyebrow').textContent = p.category || '';
+    document.getElementById('ppTitle').textContent = p.title || '';
+    document.getElementById('ppClient').textContent = p.client || '—';
+    document.getElementById('ppYear').textContent = p.year || '—';
+    document.getElementById('ppScope').textContent = p.scope || '—';
+    document.getElementById('ppIndustry').textContent = p.industry || '—';
+    document.getElementById('ppDesc').textContent = p.description || '—';
+    document.getElementById('projectCounter').textContent =
+      `${String(idx + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+
+    // Hero image
+    const heroEl = document.getElementById('ppHeroImg');
+    const hImg = p.hero_image || p.cover_image || '';
+    if (hImg) {
+      heroEl.innerHTML = `<img src="${hImg}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+    } else {
+      heroEl.innerHTML = `<div class="img-placeholder tone-2" style="height:100%;font-size:10px;">Image</div>`;
+    }
+
+    // Gallery
+    const galleryEl = document.getElementById('ppGallery');
+    const imgs = Array.isArray(p.gallery) ? p.gallery : [];
+    if (imgs.length > 0) {
+      galleryEl.innerHTML = imgs.map(src =>
+        `<div class="gallery-img"><div class="gallery-img-inner" style="aspect-ratio:3/4;overflow:hidden;">
+          <img src="${src}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+        </div></div>`
+      ).join('');
+    } else {
+      const tones = ['tone-1','tone-3','tone-4','tone-2','tone-5','tone-6'];
+      galleryEl.innerHTML = tones.map(t =>
+        `<div class="gallery-img"><div class="gallery-img-inner img-placeholder ${t}" style="aspect-ratio:3/4;"></div></div>`
+      ).join('');
+    }
+
+    const page = document.getElementById('projectPage');
+    page.classList.add('open');
+    page.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProject() {
+    document.getElementById('projectPage').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── Design Package Page ──
+  const packageData = {
+  "basic": {
+    "slug": "basic",
+    "header_title": "Basic Package",
+    "eyebrow": "Design Package — Branding Starter",
+    "title": "Basic Package\nfor New Founders",
+    "tagline": "Dành cho nhà sáng lập mới bắt đầu.\nHành trình dài — kết quả bền vững.",
+    "intro": "Gói này được thiết kế cho những thương hiệu đang ở giai đoạn đầu ra mắt — nơi mỗi quyết định thị giác đều quan trọng và cần được xây dựng có chiều sâu.\n\nThay vì chạy nhanh và đốt ngân sách, gói Basic hướng đến việc đặt nền móng đúng: khai thác Unique Selling Point của sản phẩm, kể câu chuyện thương hiệu ngắn gọn nhưng có lý, và giới thiệu đến khách hàng bạn là ai — đến từ đâu — vì sao tồn tại. Đây là điểm khởi đầu hiệu quả nhất để test thị trường, đồng thời tạo tiền đề cho các chiến lược dài hạn phía sau.",
+    "dropdown_label": "Basic Package for New Founders",
+    "dropdown_tag": "Branding Starter",
+    "plans": [
+      {
+        "tier": "Plan A",
+        "name": "Starter",
+        "price": "8.000.000₫",
+        "note": "Chưa bao gồm thuế VAT 10%",
+        "featured": false,
+        "items": [
+          "4 mẫu post thiết kế 2D cho sản phẩm",
+          "2 video ngắn giới thiệu sản phẩm & thông điệp thương hiệu",
+          "Content caption cho từng bài đăng (design & video)",
+          "Adapt nội dung qua 2 nền tảng: Facebook & Instagram",
+          "Khai thác USP sản phẩm từ brief của client",
+          "1 vòng revision sau khi bàn giao draft"
+        ]
+      },
+      {
+        "tier": "Plan B — Recommended",
+        "name": "Growth",
+        "price": "13.500.000₫",
+        "note": "Chưa bao gồm thuế VAT 10%",
+        "featured": true,
+        "items": [
+          "5 mẫu post thiết kế 2D cho sản phẩm",
+          "4 video ngắn giới thiệu sản phẩm & thông điệp thương hiệu",
+          "Content caption cho từng bài đăng (design & video)",
+          "Adapt nội dung qua 2 nền tảng: Facebook & Instagram",
+          "Khai thác USP sản phẩm từ brief của client",
+          "Brand story ngắn — định hướng giới thiệu thương hiệu",
+          "2 vòng revision sau khi bàn giao draft"
+        ]
+      }
+    ],
+    "gallery": [
+      {
+        "tone": "tone-1",
+        "label": "Product Visual"
+      },
+      {
+        "tone": "tone-2",
+        "label": "Brand Story"
+      },
+      {
+        "tone": "tone-3",
+        "label": "Social Post"
+      },
+      {
+        "tone": "tone-4",
+        "label": "Short Video"
+      },
+      {
+        "tone": "tone-5",
+        "label": "USP Design"
+      },
+      {
+        "tone": "tone-6",
+        "label": "Campaign"
+      }
+    ],
+    "order": 1
+  },
+  "social": {
+    "slug": "social",
+    "header_title": "Social Media Package",
+    "eyebrow": "Design Package — Social & Video",
+    "title": "Building Social Media\nwith Short Video Clips",
+    "tagline": "Xây dựng kênh mạng xã hội\nbằng nội dung video ngắn chuyên nghiệp.",
+    "intro": "Gói này dành cho các thương hiệu muốn xây dựng sự hiện diện mạnh mẽ trên các nền tảng mạng xã hội thông qua video ngắn — định dạng nội dung đang dẫn đầu về tương tác.\n\nTừ concept đến production, mọi thứ được thiết kế để phù hợp với thuật toán, thu hút mắt người xem trong 3 giây đầu, và truyền tải đúng thông điệp thương hiệu bạn muốn gửi đến thị trường.",
+    "dropdown_label": "Building Social Media with Short Videos",
+    "dropdown_tag": "Social & Video",
+    "plans": [
+      {
+        "tier": "Coming Soon",
+        "name": "Social Starter",
+        "price": "—",
+        "note": "Chi tiết gói đang được cập nhật",
+        "featured": false,
+        "items": [
+          "Concept & script cho video ngắn",
+          "Motion design & visual production",
+          "Adapt cho Reels, TikTok, Shorts",
+          "Caption & hashtag strategy",
+          "Brand tone of voice định hướng"
+        ]
+      }
+    ],
+    "gallery": [],
+    "order": 2
+  }
+};
+
+  function openPackage(type) {
+    const d = packageData[type];
+    if (!d) return;
+    document.getElementById('pkgHeaderTitle').textContent = d.header_title || 'Design Package';
+    document.getElementById('pkgEyebrow').textContent = d.eyebrow || '';
+    document.getElementById('pkgTitle').innerHTML = (d.title || '').replace(/\n/g, '<br>');
+    document.getElementById('pkgTagline').innerHTML = (d.tagline || '').replace(/\n/g, '<br>');
+    document.getElementById('pkgIntro').innerHTML = (d.intro || '').replace(/\n\n/g, '<br><br>');
+    document.getElementById('pkgPlanCount').textContent =
+      `0${d.plans.length} Plan${d.plans.length > 1 ? 's' : ''}`;
+
+    const plansEl = document.getElementById('pkgPlans');
+    plansEl.style.gridTemplateColumns = d.plans.length === 1 ? '1fr' : '1fr 1fr';
+    plansEl.innerHTML = d.plans.map(p => `
+      <div class="pkg-plan${p.featured ? ' featured-plan' : ''}">
+        <div class="pkg-plan-tier">${p.tier}</div>
+        <div class="pkg-plan-name">${p.name}</div>
+        <div class="pkg-plan-price">${p.price}</div>
+        <div class="pkg-plan-price-note">${p.note}</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-plan-items">
+          ${p.items.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+        <a href="https://www.instagram.com/nnhanlee" target="_blank" class="pkg-plan-cta">Get in Touch →</a>
+      </div>
+    `).join('');
+
+    const galleryEl = document.getElementById('pkgGallery');
+    if (d.gallery && d.gallery.length > 0) {
+      galleryEl.innerHTML = d.gallery.map(g => `
+        <div class="pkg-gallery-item">
+          <div class="pkg-gallery-inner ${g.tone}">${g.label}</div>
+        </div>
+      `).join('');
+    } else {
+      galleryEl.innerHTML = '';
+    }
+
+    const page = document.getElementById('packagePage');
+    page.classList.add('open');
+    page.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePackage() {
+    document.getElementById('packagePage').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── Package dropdown JS control ──
+  const packageDropdown = document.getElementById('packageDropdown');
+  const packagePanel = document.getElementById('packagePanel');
+  let pkgCloseTimer = null;
+
+  function openPackageMenu() {
+    clearTimeout(pkgCloseTimer);
+    packageDropdown.classList.add('open');
+  }
+  function schedulePkgClose() {
+    pkgCloseTimer = setTimeout(() => packageDropdown.classList.remove('open'), 120);
+  }
+  function closePackageMenu() {
+    clearTimeout(pkgCloseTimer);
+    packageDropdown.classList.remove('open');
+  }
+
+  packageDropdown.addEventListener('mouseenter', openPackageMenu);
+  packageDropdown.addEventListener('mouseleave', schedulePkgClose);
+  packagePanel.addEventListener('mouseenter', openPackageMenu);
+  packagePanel.addEventListener('mouseleave', schedulePkgClose);
+
+  // Mobile tap for package dropdown
+  document.getElementById('packageTrigger').addEventListener('click', function(e) {
+    if (window.innerWidth <= 640) {
+      e.preventDefault();
+      packageDropdown.classList.toggle('open');
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeProject();
+      closePackage();
+    }
+  });
+
+  // Netlify Identity — redirect to admin after login
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', user => {
+      if (!user) {
+        window.netlifyIdentity.on('login', () => {
+          document.location.href = '/admin/';
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>
