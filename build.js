@@ -44,6 +44,17 @@ function nl2br(str) {
   return esc(str).replace(/\n/g, '<br>');
 }
 
+// Resolve image paths: CMS stores as /uploads/x.jpg, actual file at static/uploads/x.jpg
+function resolveImg(imgPath) {
+  if (!imgPath || imgPath.trim() === '') return '';
+  // Already a full URL
+  if (imgPath.startsWith('http')) return imgPath;
+  // CMS path like /uploads/x.jpg → keep as-is (Netlify serves static/ content)
+  // But also handle paths like static/uploads/x.jpg
+  if (imgPath.startsWith('static/')) return '/' + imgPath.replace('static/', '');
+  return imgPath;
+}
+
 // ─── LOAD DATA ─────────────────────────────────────────
 const DATA_DIR = path.join(__dirname, 'data');
 
@@ -78,10 +89,38 @@ function buildBrandsDropdown() {
               <span class="dropdown-project-tag">${esc(proj.tag || '')}</span>
             </a>`;
         }
-        // Find matching project index for onclick
-        const projIdx = projects.findIndex(p =>
-          p.title && proj.title && p.title.toLowerCase().includes(proj.title.toLowerCase().split(' ')[0])
-        );
+        // Find matching project index — try multiple strategies
+        let projIdx = -1;
+        const brandName = b.name.toLowerCase();
+        const projTitle = proj.title.toLowerCase();
+        
+        // Strategy 1: exact title match
+        projIdx = projects.findIndex(p => p.title && p.title.toLowerCase() === projTitle);
+        
+        // Strategy 2: project title contains brand project title or vice versa
+        if (projIdx < 0) {
+          projIdx = projects.findIndex(p => p.title && (
+            p.title.toLowerCase().includes(projTitle) || projTitle.includes(p.title.toLowerCase())
+          ));
+        }
+        
+        // Strategy 3: match by brand name against project title or client
+        if (projIdx < 0) {
+          projIdx = projects.findIndex(p => (
+            (p.title && p.title.toLowerCase().includes(brandName)) ||
+            (p.client && p.client.toLowerCase().includes(brandName)) ||
+            (p.title && brandName.includes(p.title.toLowerCase()))
+          ));
+        }
+        
+        // Strategy 4: match by category or scope keywords
+        if (projIdx < 0) {
+          const projWords = projTitle.split(/\s+/).filter(w => w.length > 3);
+          projIdx = projects.findIndex(p => {
+            const combined = `${p.title} ${p.category} ${p.scope} ${p.client}`.toLowerCase();
+            return projWords.filter(w => combined.includes(w)).length >= 2;
+          });
+        }
         const clickFn = projIdx >= 0
           ? `openProject(${projIdx}); closeBrands(); return false;`
           : `return false;`;
@@ -124,9 +163,10 @@ function buildPackagesDropdown() {
 
 // ── Hero Section ──
 function buildHeroImage() {
-  if (settings.hero_image) {
+  const heroImg = resolveImg(settings.hero_image);
+  if (heroImg) {
     return `
-    <img src="${esc(settings.hero_image)}" alt="Hero" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.88;">
+    <img src="${esc(heroImg)}" alt="Hero" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.88;">
     <span class="hero-img-label">${esc(settings.hero_image_label || 'Featured — 2025')}</span>`;
   }
   return `
@@ -147,7 +187,7 @@ function buildMarquee() {
 // ── Projects Grid ──
 function buildProjectsGrid() {
   return projects.map((p, i) => {
-    const imgSrc = p.cover_image || '';
+    const imgSrc = resolveImg(p.cover_image);
     const imgHTML = imgSrc
       ? `<img src="${esc(imgSrc)}" alt="${esc(p.title)}" style="width:100%;height:100%;object-fit:cover;opacity:0.9;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.5s ease;display:block;">`
       : `<div class="img-placeholder tone-${(i % 6) + 1}" style="height:100%;">Image</div>`;
@@ -173,7 +213,7 @@ function buildFeaturedRow() {
   }
   return featured.map((p, i) => {
     const fIdx = projects.indexOf(p);
-    const fImg = p.hero_image || p.cover_image || '';
+    const fImg = resolveImg(p.hero_image || p.cover_image);
     const fImgHTML = fImg
       ? `<img src="${esc(fImg)}" alt="${esc(p.title)}" style="width:100%;height:100%;object-fit:cover;opacity:0.88;transition:transform 0.8s ease,opacity 0.5s ease;display:block;">`
       : `<div class="img-placeholder tone-${i + 2}" style="height:100%;">Campaign Image</div>`;
@@ -219,8 +259,9 @@ function buildAboutStrip() {
 // ── Social Strip ──
 function buildSocialStrip() {
   return social.map((s, i) => {
-    const imgHTML = s.image
-      ? `<img src="${esc(s.image)}" alt="${esc(s.label)}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;">`
+    const imgSrc = resolveImg(s.image);
+    const imgHTML = imgSrc
+      ? `<img src="${esc(imgSrc)}" alt="${esc(s.label)}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;">`
       : `<div class="img-placeholder tone-${(i % 5) + 1}" style="height:100%;">Post</div>`;
     return `
     <div class="social-item">
@@ -261,9 +302,9 @@ function buildProjectsJSArray() {
     scope: p.scope || '—',
     industry: p.industry || '—',
     description: p.description || '—',
-    cover_image: p.cover_image || '',
-    hero_image: p.hero_image || p.cover_image || '',
-    gallery: p.gallery || [],
+    cover_image: resolveImg(p.cover_image),
+    hero_image: resolveImg(p.hero_image || p.cover_image),
+    gallery: (p.gallery || []).map(g => resolveImg(typeof g === 'string' ? g : g.image || g)),
     featured: p.featured !== false,
   })), null, 2);
 }
