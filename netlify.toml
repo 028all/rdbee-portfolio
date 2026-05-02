@@ -4,3 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/uploads/*"
+  to = "/static/uploads/:splat"
+  status = 200
