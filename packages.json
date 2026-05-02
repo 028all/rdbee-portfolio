@@ -1,0 +1,82 @@
+{
+  "basic": {
+    "slug": "basic",
+    "header_title": "Basic Package",
+    "eyebrow": "Design Package — Branding Starter",
+    "title": "Basic Package\nfor New Founders",
+    "tagline": "Dành cho nhà sáng lập mới bắt đầu.\nHành trình dài — kết quả bền vững.",
+    "intro": "Gói này được thiết kế cho những thương hiệu đang ở giai đoạn đầu ra mắt — nơi mỗi quyết định thị giác đều quan trọng và cần được xây dựng có chiều sâu.\n\nThay vì chạy nhanh và đốt ngân sách, gói Basic hướng đến việc đặt nền móng đúng: khai thác Unique Selling Point của sản phẩm, kể câu chuyện thương hiệu ngắn gọn nhưng có lý, và giới thiệu đến khách hàng bạn là ai — đến từ đâu — vì sao tồn tại. Đây là điểm khởi đầu hiệu quả nhất để test thị trường, đồng thời tạo tiền đề cho các chiến lược dài hạn phía sau.",
+    "dropdown_label": "Basic Package for New Founders",
+    "dropdown_tag": "Branding Starter",
+    "plans": [
+      {
+        "tier": "Plan A",
+        "name": "Starter",
+        "price": "8.000.000₫",
+        "note": "Chưa bao gồm thuế VAT 10%",
+        "featured": false,
+        "items": [
+          "4 mẫu post thiết kế 2D cho sản phẩm",
+          "2 video ngắn giới thiệu sản phẩm & thông điệp thương hiệu",
+          "Content caption cho từng bài đăng (design & video)",
+          "Adapt nội dung qua 2 nền tảng: Facebook & Instagram",
+          "Khai thác USP sản phẩm từ brief của client",
+          "1 vòng revision sau khi bàn giao draft"
+        ]
+      },
+      {
+        "tier": "Plan B — Recommended",
+        "name": "Growth",
+        "price": "13.500.000₫",
+        "note": "Chưa bao gồm thuế VAT 10%",
+        "featured": true,
+        "items": [
+          "5 mẫu post thiết kế 2D cho sản phẩm",
+          "4 video ngắn giới thiệu sản phẩm & thông điệp thương hiệu",
+          "Content caption cho từng bài đăng (design & video)",
+          "Adapt nội dung qua 2 nền tảng: Facebook & Instagram",
+          "Khai thác USP sản phẩm từ brief của client",
+          "Brand story ngắn — định hướng giới thiệu thương hiệu",
+          "2 vòng revision sau khi bàn giao draft"
+        ]
+      }
+    ],
+    "gallery": [
+      { "tone": "tone-1", "label": "Product Visual" },
+      { "tone": "tone-2", "label": "Brand Story" },
+      { "tone": "tone-3", "label": "Social Post" },
+      { "tone": "tone-4", "label": "Short Video" },
+      { "tone": "tone-5", "label": "USP Design" },
+      { "tone": "tone-6", "label": "Campaign" }
+    ],
+    "order": 1
+  },
+  "social": {
+    "slug": "social",
+    "header_title": "Social Media Package",
+    "eyebrow": "Design Package — Social & Video",
+    "title": "Building Social Media\nwith Short Video Clips",
+    "tagline": "Xây dựng kênh mạng xã hội\nbằng nội dung video ngắn chuyên nghiệp.",
+    "intro": "Gói này dành cho các thương hiệu muốn xây dựng sự hiện diện mạnh mẽ trên các nền tảng mạng xã hội thông qua video ngắn — định dạng nội dung đang dẫn đầu về tương tác.\n\nTừ concept đến production, mọi thứ được thiết kế để phù hợp với thuật toán, thu hút mắt người xem trong 3 giây đầu, và truyền tải đúng thông điệp thương hiệu bạn muốn gửi đến thị trường.",
+    "dropdown_label": "Building Social Media with Short Videos",
+    "dropdown_tag": "Social & Video",
+    "plans": [
+      {
+        "tier": "Coming Soon",
+        "name": "Social Starter",
+        "price": "—",
+        "note": "Chi tiết gói đang được cập nhật",
+        "featured": false,
+        "items": [
+          "Concept & script cho video ngắn",
+          "Motion design & visual production",
+          "Adapt cho Reels, TikTok, Shorts",
+          "Caption & hashtag strategy",
+          "Brand tone of voice định hướng"
+        ]
+      }
+    ],
+    "gallery": [],
+    "order": 2
+  }
+}
