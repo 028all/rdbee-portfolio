@@ -1,14 +1,14 @@
 {
-  "title": "Ryo Việt Nam",
-  "category": "Multi-service Platform — Visual",
   "client": "Ryo Vietnam",
-  "year": "2024",
-  "scope": "Visual Design, UI Direction",
-  "industry": "Tech / Super App",
-  "description": "Visual direction for Ryo — a Vietnamese multi-service platform covering food delivery, logistics, ride-hailing and e-commerce. A bold, energetic visual system built for scale.",
-  "cover_image": "",
-  "hero_image": "",
-  "gallery": [],
   "featured": false,
-  "order": 2
+  "order": 2,
+  "gallery": [],
+  "cover_image": "/uploads/ryo-vietnam-cover.png",
+  "scope": "Visual Design, UI Direction",
+  "hero_image": "",
+  "title": "RYO VIETNAM",
+  "description": "Visual direction for Ryo — a Vietnamese multi-service platform covering food delivery, logistics, ride-hailing and e-commerce. A bold, energetic visual system built for scale.",
+  "year": "2024",
+  "category": "Multi-service Platform — Visual",
+  "industry": "Tech / Super App"
 }
