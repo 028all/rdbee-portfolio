@@ -1,0 +1,65 @@
+[
+  {
+    "name": "KT Centre Group",
+    "order": 1,
+    "status": "active",
+    "industry": "Beauty Institute",
+    "projects": [
+      { "title": "Monthly Beauty Poster Series", "tag": "Branding" },
+      { "title": "Premium Menu Design", "tag": "Print & Packaging" }
+    ]
+  },
+  {
+    "name": "Ryo Vietnam",
+    "order": 2,
+    "status": "active",
+    "industry": "Tech / Super App",
+    "projects": [
+      { "title": "Visual Design System", "tag": "Multi-service Platform" }
+    ]
+  },
+  {
+    "name": "Porêves",
+    "order": 3,
+    "status": "active",
+    "industry": "Cosmetics",
+    "projects": [
+      { "title": "Brand Identity & Packaging", "tag": "Cosmetics" }
+    ]
+  },
+  {
+    "name": "Simla Piercing",
+    "order": 4,
+    "status": "coming_soon",
+    "industry": "Piercing Studio",
+    "projects": []
+  },
+  {
+    "name": "Nepherteti",
+    "order": 5,
+    "status": "coming_soon",
+    "industry": "Beauty",
+    "projects": []
+  },
+  {
+    "name": "Enuff Studio",
+    "order": 6,
+    "status": "coming_soon",
+    "industry": "Creative Studio",
+    "projects": []
+  },
+  {
+    "name": "Silver Haus",
+    "order": 7,
+    "status": "coming_soon",
+    "industry": "Lifestyle",
+    "projects": []
+  },
+  {
+    "name": "Gravity Pilates",
+    "order": 8,
+    "status": "coming_soon",
+    "industry": "Wellness",
+    "projects": []
+  }
+]

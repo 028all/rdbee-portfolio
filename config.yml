@@ -1,0 +1,221 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/uploads"
+public_folder: "/uploads"
+
+# Publish mode: editorial workflow cho review trước khi publish
+publish_mode: editorial_workflow
+
+collections:
+
+  # ═══════════════════════════════════════════
+  # SETTINGS — site-wide configuration
+  # ═══════════════════════════════════════════
+  - name: "settings"
+    label: "⚙️ Site Settings"
+    files:
+      - name: "general"
+        label: "General Settings"
+        file: "data/settings.json"
+        fields:
+          # Header
+          - { name: "logo_name", label: "Logo Name", widget: "string", default: "Rd Bee" }
+          - { name: "status", label: "Header Status Text", widget: "string", default: "Available for Projects" }
+
+          # Hero
+          - { name: "tagline", label: "Hero Eyebrow / Tagline", widget: "string" }
+          - { name: "hero_title_line1", label: "Hero Title Line 1", widget: "string", default: "Visual" }
+          - { name: "hero_title_line2", label: "Hero Title Line 2", widget: "string", default: "Brand" }
+          - { name: "hero_title_line3", label: "Hero Title Line 3 (italic)", widget: "string", default: "Identity" }
+          - { name: "hero_desc", label: "Hero Description", widget: "text" }
+          - { name: "hero_image", label: "Hero Image", widget: "image", required: false }
+          - { name: "hero_image_label", label: "Hero Image Label", widget: "string", default: "Featured — 2025" }
+
+          # Marquee
+          - name: "marquee_items"
+            label: "Marquee Items"
+            widget: "list"
+            field: { name: "item", label: "Item", widget: "string" }
+
+          # About Section
+          - { name: "about_designer_label", label: "About Col 1 Label", widget: "string", default: "Designer" }
+          - { name: "about_designer_content", label: "About Col 1 Content", widget: "text" }
+          - { name: "about_designer_sub", label: "About Col 1 Sub", widget: "text" }
+          - { name: "about_expertise_label", label: "About Col 2 Label", widget: "string", default: "Expertise" }
+          - { name: "about_expertise_content", label: "About Col 2 Content", widget: "text" }
+          - { name: "about_expertise_sub", label: "About Col 2 Sub", widget: "text" }
+          - { name: "about_contact_label", label: "About Col 3 Label", widget: "string", default: "Contact" }
+
+          # Contact & Social
+          - { name: "email", label: "Email", widget: "string" }
+          - { name: "instagram", label: "Instagram Handle", widget: "string", default: "@nnhanlee" }
+          - { name: "instagram_url", label: "Instagram URL", widget: "string" }
+          - { name: "behance", label: "Behance URL", widget: "string" }
+          - { name: "behance_label", label: "Behance Display Label", widget: "string", default: "Behance: rdbee" }
+          - { name: "location", label: "Location", widget: "string" }
+
+          # Footer
+          - { name: "footer_desc", label: "Footer Description", widget: "text" }
+          - name: "footer_nav_links"
+            label: "Footer Nav Links"
+            widget: "list"
+            field: { name: "link", label: "Link", widget: "string" }
+          - { name: "copyright", label: "Copyright Text", widget: "string" }
+
+  # ═══════════════════════════════════════════
+  # PROJECTS
+  # ═══════════════════════════════════════════
+  - name: "projects"
+    label: "🎨 Projects"
+    label_singular: "Project"
+    folder: "data/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    sortable_fields: ["order", "title"]
+    fields:
+      - { name: "title", label: "Title", widget: "string" }
+      - { name: "category", label: "Category", widget: "string", hint: "e.g. Beauty Institute — Branding" }
+      - { name: "client", label: "Client", widget: "string" }
+      - { name: "year", label: "Year", widget: "string" }
+      - { name: "scope", label: "Scope", widget: "string" }
+      - { name: "industry", label: "Industry", widget: "string" }
+      - { name: "description", label: "Description", widget: "text" }
+      - { name: "cover_image", label: "Cover Image (Grid)", widget: "image", required: false }
+      - { name: "hero_image", label: "Hero Image (Detail Page)", widget: "image", required: false }
+      - name: "gallery"
+        label: "Gallery Images"
+        widget: "list"
+        required: false
+        field: { name: "image", label: "Image", widget: "image" }
+      - { name: "featured", label: "Featured in 'In Focus'", widget: "boolean", default: false }
+      - { name: "order", label: "Sort Order", widget: "number", value_type: "int", default: 99 }
+
+  # ═══════════════════════════════════════════
+  # BRANDS DROPDOWN
+  # ═══════════════════════════════════════════
+  - name: "brands"
+    label: "🏷️ Brands"
+    files:
+      - name: "brands_list"
+        label: "Brands Dropdown"
+        file: "data/brands.json"
+        fields:
+          - name: "brands"
+            label: "Brands"
+            widget: "list"
+            fields:
+              - { name: "name", label: "Brand Name", widget: "string" }
+              - { name: "order", label: "Sort Order", widget: "number", value_type: "int" }
+              - name: "status"
+                label: "Status"
+                widget: "select"
+                options: ["active", "coming_soon"]
+                default: "coming_soon"
+              - { name: "industry", label: "Industry Tag", widget: "string" }
+              - name: "projects"
+                label: "Brand Projects"
+                widget: "list"
+                required: false
+                fields:
+                  - { name: "title", label: "Project Title", widget: "string" }
+                  - { name: "tag", label: "Tag", widget: "string" }
+
+  # ═══════════════════════════════════════════
+  # SOCIAL STRIP
+  # ═══════════════════════════════════════════
+  - name: "social"
+    label: "📸 Social Strip"
+    files:
+      - name: "social_items"
+        label: "Social Items"
+        file: "data/social.json"
+        fields:
+          - name: "items"
+            label: "Social Posts"
+            widget: "list"
+            fields:
+              - { name: "label", label: "Label", widget: "string" }
+              - { name: "image", label: "Image", widget: "image", required: false }
+              - { name: "order", label: "Sort Order", widget: "number", value_type: "int" }
+
+  # ═══════════════════════════════════════════
+  # DESIGN PACKAGES
+  # ═══════════════════════════════════════════
+  - name: "packages"
+    label: "📦 Design Packages"
+    files:
+      - name: "packages_data"
+        label: "Packages"
+        file: "data/packages.json"
+        fields:
+          - name: "basic"
+            label: "Basic Package"
+            widget: "object"
+            fields:
+              - { name: "slug", label: "Slug", widget: "hidden", default: "basic" }
+              - { name: "header_title", label: "Header Title", widget: "string" }
+              - { name: "eyebrow", label: "Eyebrow", widget: "string" }
+              - { name: "title", label: "Title (use \\n for line break)", widget: "text" }
+              - { name: "tagline", label: "Tagline", widget: "text" }
+              - { name: "intro", label: "Intro Text", widget: "text" }
+              - { name: "dropdown_label", label: "Dropdown Label", widget: "string" }
+              - { name: "dropdown_tag", label: "Dropdown Tag", widget: "string" }
+              - { name: "order", label: "Sort Order", widget: "number", value_type: "int", default: 1 }
+              - name: "plans"
+                label: "Plans"
+                widget: "list"
+                fields:
+                  - { name: "tier", label: "Tier Label", widget: "string" }
+                  - { name: "name", label: "Plan Name", widget: "string" }
+                  - { name: "price", label: "Price", widget: "string" }
+                  - { name: "note", label: "Price Note", widget: "string" }
+                  - { name: "featured", label: "Featured (dark theme)", widget: "boolean", default: false }
+                  - name: "items"
+                    label: "Included Items"
+                    widget: "list"
+                    field: { name: "item", label: "Item", widget: "string" }
+              - name: "gallery"
+                label: "Gallery"
+                widget: "list"
+                required: false
+                fields:
+                  - { name: "tone", label: "Tone Class", widget: "string", hint: "tone-1 through tone-6" }
+                  - { name: "label", label: "Label", widget: "string" }
+
+          - name: "social"
+            label: "Social Media Package"
+            widget: "object"
+            fields:
+              - { name: "slug", label: "Slug", widget: "hidden", default: "social" }
+              - { name: "header_title", label: "Header Title", widget: "string" }
+              - { name: "eyebrow", label: "Eyebrow", widget: "string" }
+              - { name: "title", label: "Title (use \\n for line break)", widget: "text" }
+              - { name: "tagline", label: "Tagline", widget: "text" }
+              - { name: "intro", label: "Intro Text", widget: "text" }
+              - { name: "dropdown_label", label: "Dropdown Label", widget: "string" }
+              - { name: "dropdown_tag", label: "Dropdown Tag", widget: "string" }
+              - { name: "order", label: "Sort Order", widget: "number", value_type: "int", default: 2 }
+              - name: "plans"
+                label: "Plans"
+                widget: "list"
+                fields:
+                  - { name: "tier", label: "Tier Label", widget: "string" }
+                  - { name: "name", label: "Plan Name", widget: "string" }
+                  - { name: "price", label: "Price", widget: "string" }
+                  - { name: "note", label: "Price Note", widget: "string" }
+                  - { name: "featured", label: "Featured (dark theme)", widget: "boolean", default: false }
+                  - name: "items"
+                    label: "Included Items"
+                    widget: "list"
+                    field: { name: "item", label: "Item", widget: "string" }
+              - name: "gallery"
+                label: "Gallery"
+                widget: "list"
+                required: false
+                fields:
+                  - { name: "tone", label: "Tone Class", widget: "string" }
+                  - { name: "label", label: "Label", widget: "string" }

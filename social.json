@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Beauty Editorial",
+    "image": "",
+    "order": 1
+  },
+  {
+    "label": "Fashion Campaign",
+    "image": "",
+    "order": 2
+  },
+  {
+    "label": "Brand Packaging",
+    "image": "",
+    "order": 3
+  },
+  {
+    "label": "Personal Project",
+    "image": "",
+    "order": 4
+  }
+]
