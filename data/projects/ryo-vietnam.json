@@ -3,7 +3,8 @@
   "featured": false,
   "order": 2,
   "gallery": [
-    "/uploads/ryo-ảnh-1.png"
+    "/uploads/ryo-ảnh-1.png",
+    "/uploads/ryo-post-2.png"
   ],
   "cover_image": "/uploads/ryo-vietnam-cover.png",
   "scope": "Visual Design, UI Direction",
