@@ -2,7 +2,9 @@
   "client": "Ryo Vietnam",
   "featured": false,
   "order": 2,
-  "gallery": [],
+  "gallery": [
+    "/uploads/ryo-ảnh-1.png"
+  ],
   "cover_image": "/uploads/ryo-vietnam-cover.png",
   "scope": "Visual Design, UI Direction",
   "hero_image": "",
