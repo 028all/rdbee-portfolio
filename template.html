@@ -247,7 +247,7 @@
 
   .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(52px, 6vw, 88px);
+    font-size: clamp(64px, 8vw, 120px);
     font-weight: 700;
     line-height: 0.95;
     letter-spacing: -0.03em;
@@ -258,6 +258,10 @@
     font-style: normal;
     font-weight: 300;
     color: var(--mid);
+  }
+  .hero-title strong {
+    font-weight: 900;
+    color: var(--black);
   }
 
   .hero-desc {
@@ -1288,7 +1292,7 @@
 <section class="hero">
   <div class="hero-left">
     <p class="hero-eyebrow fade-in">{{HERO_EYEBROW}}</p>
-    <h1 class="hero-title fade-in fade-in-delay-1">{{HERO_TITLE_LINE1}}<br>{{HERO_TITLE_LINE2}}<br><em>{{HERO_TITLE_LINE3}}</em></h1>
+    <h1 class="hero-title fade-in fade-in-delay-1">{{HERO_TITLE_LINE1}}<br>{{HERO_TITLE_LINE2}}<br><strong>{{HERO_TITLE_LINE3}}</strong></h1>
     <p class="hero-desc fade-in fade-in-delay-2">{{HERO_DESC}}</p>
   </div>
   <div class="hero-right">
