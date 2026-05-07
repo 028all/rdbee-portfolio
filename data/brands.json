@@ -62,9 +62,14 @@
     {
       "name": "Enuff Studio",
       "order": 6,
-      "status": "coming_soon",
-      "industry": "Creative Studio",
-      "projects": []
+      "status": "active",
+      "industry": "WOMEN'S CLOTHES",
+      "projects": [
+        {
+          "title": "ENUFF STUDIO",
+          "tag": "BRANDING"
+        }
+      ]
     },
     {
       "name": "Silver Haus",
