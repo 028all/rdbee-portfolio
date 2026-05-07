@@ -286,23 +286,71 @@
     overflow: hidden;
     background: var(--black);
   }
-
-  .hero-img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    opacity: 0.85;
-    transition: transform 0.8s ease, opacity 0.8s ease;
-    display: block;
-  }
-  .hero-right:hover .hero-img { transform: scale(1.03); opacity: 0.75; }
-
-  .hero-img-label {
+  .hero-gradient-bg {
     position: absolute;
-    bottom: 32px; right: 32px;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(245,245,240,0.6);
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      135deg,
+      #0a0a0a 0%,
+      #1a1a2e 15%,
+      #e63222 25%,
+      #ff6b4a 35%,
+      #0a0a0a 45%,
+      #2d1b4e 55%,
+      #e63222 65%,
+      #1a1a2e 75%,
+      #0a0a0a 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+  }
+  @keyframes gradientMove {
+    0% { transform: translate(0, 0) rotate(0deg); background-position: 0% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { transform: translate(-10%, -10%) rotate(3deg); background-position: 50% 100%; }
+    75% { background-position: 0% 50%; }
+    100% { transform: translate(0, 0) rotate(0deg); background-position: 0% 50%; }
+  }
+  .hero-glass {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(60px);
+    -webkit-backdrop-filter: blur(60px);
+    background: rgba(10,10,10,0.15);
+  }
+  .hero-glass-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.5;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+  .hero-glass-orb:nth-child(1) {
+    width: 300px; height: 300px;
+    background: #e63222;
+    top: 20%; left: 30%;
+    animation-delay: 0s;
+  }
+  .hero-glass-orb:nth-child(2) {
+    width: 200px; height: 200px;
+    background: #ff6b4a;
+    top: 50%; left: 60%;
+    animation-delay: -3s;
+    animation-duration: 10s;
+  }
+  .hero-glass-orb:nth-child(3) {
+    width: 250px; height: 250px;
+    background: #2d1b4e;
+    top: 60%; left: 20%;
+    animation-delay: -5s;
+    animation-duration: 14s;
+  }
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
   }
 
   /* MARQUEE */
@@ -1304,7 +1352,12 @@
     <p class="hero-desc fade-in fade-in-delay-2">{{HERO_DESC}}</p>
   </div>
   <div class="hero-right">
-    {{HERO_IMAGE}}
+    <div class="hero-gradient-bg"></div>
+    <div class="hero-glass-orb"></div>
+    <div class="hero-glass-orb"></div>
+    <div class="hero-glass-orb"></div>
+    <div class="hero-glass"></div>
+    <span class="hero-img-label">Featured — 2026</span>
   </div>
 </section>
 
