@@ -1,14 +1,14 @@
 {
-  "title": "Coming Soon",
-  "category": "Coming Soon",
-  "client": "—",
-  "year": "—",
-  "scope": "—",
-  "industry": "—",
-  "description": "Project coming soon.",
-  "cover_image": "",
-  "hero_image": "",
-  "gallery": [],
+  "client": "NEPHERTETI",
   "featured": false,
-  "order": 7
+  "order": 7,
+  "gallery": [],
+  "cover_image": "",
+  "scope": "RE-BRAND, VISUAL IDENTITY",
+  "hero_image": "/uploads/nepherteti-hero-image.png",
+  "title": "NEPHERTITY",
+  "description": "Summarizing the modern fashion in the jewelry sector, it has reached a conclusion that the trend of logo creation aims for enduring, timeless, and free-spirited designs, allowing women to express their individuality.",
+  "year": "2022",
+  "category": "BRANDING",
+  "industry": "JEWELRY"
 }
