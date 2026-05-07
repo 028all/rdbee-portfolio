@@ -1,14 +1,14 @@
 {
-  "title": "Coming Soon",
-  "category": "Coming Soon",
-  "client": "—",
-  "year": "—",
-  "scope": "—",
-  "industry": "—",
-  "description": "Project coming soon.",
-  "cover_image": "",
-  "hero_image": "",
-  "gallery": [],
+  "client": "ENUFF STUDIO",
   "featured": false,
-  "order": 6
+  "order": 6,
+  "gallery": [],
+  "cover_image": "",
+  "scope": "RE-BRAND, VISUAL IDENTITY, SET UP STORE",
+  "hero_image": "/uploads/enuff-hero-image.png",
+  "title": "BRANDING",
+  "description": "Summarizing the modern fashion in the jewelry sector, it has reached a conclusion that the trend of logo creation aims for enduring, timeless, and free-spirited designs, allowing women to express their individuality.\n",
+  "year": "2023",
+  "category": "ENUFF STUDIO",
+  "industry": "WOMEN'S CLOTHES"
 }
