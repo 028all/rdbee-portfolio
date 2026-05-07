@@ -6,8 +6,14 @@
       "status": "active",
       "industry": "Beauty Institute",
       "projects": [
-        { "title": "Monthly Beauty Poster Series", "tag": "Branding" },
-        { "title": "Premium Menu Design", "tag": "Print & Packaging" }
+        {
+          "title": "Monthly Beauty Poster Series",
+          "tag": "Branding"
+        },
+        {
+          "title": "Premium Menu Design",
+          "tag": "Print & Packaging"
+        }
       ]
     },
     {
@@ -16,7 +22,10 @@
       "status": "active",
       "industry": "Tech / Super App",
       "projects": [
-        { "title": "Visual Design System", "tag": "Multi-service Platform" }
+        {
+          "title": "Visual Design System",
+          "tag": "Multi-service Platform"
+        }
       ]
     },
     {
@@ -25,7 +34,10 @@
       "status": "active",
       "industry": "Cosmetics",
       "projects": [
-        { "title": "Brand Identity & Packaging", "tag": "Cosmetics" }
+        {
+          "title": "Brand Identity & Packaging",
+          "tag": "Cosmetics"
+        }
       ]
     },
     {
@@ -38,9 +50,14 @@
     {
       "name": "Nepherteti",
       "order": 5,
-      "status": "coming_soon",
-      "industry": "Beauty",
-      "projects": []
+      "status": "active",
+      "industry": "Branding",
+      "projects": [
+        {
+          "title": "NEPHERTETI",
+          "tag": "Branding"
+        }
+      ]
     },
     {
       "name": "Enuff Studio",
