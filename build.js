@@ -61,7 +61,8 @@ const DATA_DIR = path.join(__dirname, 'data');
 const settings = readJSON(path.join(DATA_DIR, 'settings.json')) || {};
 const brandsRaw = readJSON(path.join(DATA_DIR, 'brands.json')) || {};
 const brands = Array.isArray(brandsRaw) ? brandsRaw : (brandsRaw.brands || []);
-const social = readJSON(path.join(DATA_DIR, 'social.json')) || [];
+const socialRaw = readJSON(path.join(DATA_DIR, 'social.json')) || {};
+const social = Array.isArray(socialRaw) ? socialRaw : (socialRaw.items || []);
 const packages = readJSON(path.join(DATA_DIR, 'packages.json')) || {};
 const projects = loadProjectFiles(path.join(DATA_DIR, 'projects'));
 
