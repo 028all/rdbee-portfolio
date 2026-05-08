@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: 028all/rdbee-portfolio
   branch: main
 
 media_folder: "static/uploads"
