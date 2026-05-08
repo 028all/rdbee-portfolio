@@ -2,6 +2,8 @@ backend:
   name: github
   repo: 028all/rdbee-portfolio
   branch: main
+  base_url: https://rdbee-oauth.webbynhanle.workers.dev
+  auth_endpoint: /auth
 
   
 media_folder: "static/uploads"
