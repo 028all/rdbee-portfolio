@@ -4,12 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rd Bee — Content Manager</title>
-  <script>
-    // Use Sveltia's free OAuth proxy
-    window.CMS_AUTH_URL = 'https://sveltia-cms-auth.pages.dev';
-  </script>
 </head>
 <body>
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+  CMS.init({
+    config: {
+      backend: {
+        name: 'github',
+        repo: '028all/rdbee-portfolio',
+        branch: 'main',
+        base_url: 'https://rdbee-oauth.webbynhanle.workers.dev',
+        auth_endpoint: '/auth',
+      }
+    }
+  });
+  </script>
 </body>
 </html>
