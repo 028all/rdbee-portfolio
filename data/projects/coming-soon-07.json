@@ -2,7 +2,9 @@
   "client": "NEPHERTETI",
   "featured": false,
   "order": 8,
-  "gallery": [],
+  "gallery": [
+    "/uploads/nepherteti-post-2.png"
+  ],
   "cover_image": "/uploads/cover-nepherteti.png",
   "scope": "RE-BRAND, VISUAL IDENTITY",
   "hero_image": "/uploads/nepherteti-hero-image.png",
