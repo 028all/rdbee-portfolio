@@ -2,8 +2,7 @@ backend:
   name: github
   repo: 028all/rdbee-portfolio
   branch: main
-  auth_type: pkce
-  app_id: Ov23liTWsu2aTxZWdlDy
+
   
 media_folder: "static/uploads"
 public_folder: "/uploads"
