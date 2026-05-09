@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Auth Callback</title></head>
+<body>
+<p>Authenticating...</p>
+<script>
+var params = new URLSearchParams(window.location.search);
+var token = params.get('token');
+var provider = params.get('provider') || 'github';
+if (token) {
+  var payload = JSON.stringify({ token: token, provider: provider });
+  var message = 'authorization:' + provider + ':success:' + payload;
+  window.opener.postMessage(message, window.location.origin);
+  document.body.innerText = 'Success! Closing...';
+  setTimeout(function() { window.close(); }, 1000);
+} else {
+  document.body.innerText = 'Error: no token received';
+}
+</script>
+</body>
+</html>
