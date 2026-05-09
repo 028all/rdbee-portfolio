@@ -6,23 +6,6 @@
   <title>Rd Bee — Content Manager</title>
 </head>
 <body>
-  <script>
-  (function() {
-    var hash = window.location.hash;
-    if (hash && hash.indexOf('token=') > -1) {
-      var token = hash.split('token=')[1];
-      document.cookie = 'nf_jwt=' + token + ';path=/';
-      localStorage.setItem('netlify-cms-user', JSON.stringify({
-        token: token,
-        name: '028all',
-        login: '028all',
-        avatar_url: '',
-        backendName: 'github'
-      }));
-      window.location.replace('/admin/');
-    }
-  })();
-  </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
