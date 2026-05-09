@@ -6,6 +6,22 @@
   <title>Rd Bee — Content Manager</title>
 </head>
 <body>
+  <script>
+  // Check if we have a token from OAuth callback
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token');
+  if (token) {
+    // Store token and reload clean URL
+    localStorage.setItem('netlify-cms-user', JSON.stringify({
+      token: token,
+      name: '',
+      login: '',
+      avatar_url: '',
+      backendName: 'github'
+    }));
+    window.history.replaceState({}, '', '/admin/');
+  }
+  </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
