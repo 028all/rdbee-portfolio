@@ -1,1 +1,2 @@
+/cms https://rdbee-oauth.webbynhanle.workers.dev/auth 302
 /uploads/* /static/uploads/:splat 200
