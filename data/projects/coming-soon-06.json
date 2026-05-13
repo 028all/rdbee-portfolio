@@ -2,7 +2,12 @@
   "client": "ENUFF STUDIO",
   "featured": false,
   "order": 6,
-  "gallery": [],
+  "gallery": [
+    "/uploads/enuffstudio-post-1.png",
+    "/uploads/enuffstudio-post-2.png",
+    "/uploads/enuffstudio-post-3.png",
+    "/uploads/enuffstudio-post-4.png"
+  ],
   "cover_image": "/uploads/cover-enuff.png",
   "scope": "RE-BRAND, VISUAL IDENTITY, SET UP STORE",
   "hero_image": "/uploads/enuff-hero-image.png",
