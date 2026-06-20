@@ -311,7 +311,7 @@ const WH_CSS = `
   .wh-chip{font-family:var(--font-mono);font-size:12px;letter-spacing:.02em;color:var(--mid);background:transparent;border:1px solid var(--border);padding:8px 15px;border-radius:999px;cursor:none;transition:color .18s ease,background .18s ease,border-color .18s ease;}
   .wh-chip:hover{color:var(--black);border-color:var(--black);}
   .wh-chip.on{background:var(--black);color:var(--white);border-color:var(--black);}
-  .wh-brand{font-family:'Caveat',cursive;font-size:22px;line-height:1;color:var(--black);margin-bottom:5px;}
+  .wh-brand{font-family:'Caveat',cursive;font-size:22px;line-height:1;color:#e63222;margin-bottom:5px;}
   .wh-active{font-weight:500 !important;text-decoration:underline;text-underline-offset:4px;}
   .wh-feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:30px;align-items:start;}
   @media(max-width:540px){.wh-feed{grid-template-columns:1fr;}}
@@ -337,7 +337,9 @@ const WH_CSS = `
   .wh-empty{color:var(--mid);font-family:var(--font-mono);grid-column:1/-1;}
   .wh-lightbox{position:fixed;inset:0;z-index:200;display:none;background:rgba(10,10,10,.93);align-items:center;justify-content:center;padding:40px;}
   .wh-lightbox.open{display:flex;}
-  .wh-lb-inner{max-width:560px;width:100%;max-height:90vh;overflow:auto;border:1px solid rgba(245,245,240,.15);}
+  .wh-lb-inner{max-width:460px;width:100%;max-height:90vh;overflow:auto;}
+  .wh-lb-inner .wh-post{max-width:none;margin:0;}
+  .wh-lb-inner .wh-post.pol:hover{transform:none;}
   .wh-lb-close{position:fixed;top:20px;right:24px;width:42px;height:42px;border:1px solid var(--white);background:transparent;color:var(--white);font-size:15px;cursor:none;border-radius:50%;z-index:201;}
   @media(max-width:640px){.wh-wrap{padding-top:78px;}}
 `;
@@ -351,7 +353,7 @@ const WH_SCRIPT = '<scr'+'ipt>'
 + 'whMobile();window.addEventListener("resize",whMobile);'
 + 'ham.addEventListener("click",function(){nav.classList.toggle("mobile-open");ham.classList.toggle("open");});'
 + 'var lb=document.getElementById("whLightbox"),lbInner=document.getElementById("whLbInner");'
-+ 'document.querySelectorAll(".wh-post").forEach(function(p){p.addEventListener("click",function(){lbInner.innerHTML=p.querySelector(".wh-media").outerHTML+p.querySelector(".wh-post-foot").outerHTML;lb.classList.add("open");});});'
++ 'document.querySelectorAll(".wh-post").forEach(function(p){p.addEventListener("click",function(){lbInner.innerHTML=p.outerHTML;lb.classList.add("open");});});'
 + 'document.getElementById("whLbClose").addEventListener("click",function(){lb.classList.remove("open");});'
 + 'lb.addEventListener("click",function(e){if(e.target===lb)lb.classList.remove("open");});'
 + 'document.addEventListener("keydown",function(e){if(e.key==="Escape")lb.classList.remove("open");});'
