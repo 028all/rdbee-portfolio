@@ -253,6 +253,19 @@ collections:
                 label: "Caption / Nội dung"
                 widget: "text"
                 required: false
+              - name: "brand"
+                label: "Brand"
+                widget: "select"
+                required: false
+                options:
+                  - "KT Centre Group"
+                  - "Ryo Vietnam"
+                  - "Porêves"
+                  - "Simla Piercing"
+                  - "Nepherteti"
+                  - "Enuff Studio"
+                  - "Silver Haus"
+                  - "Gravity Pilates"
               - name: "format"
                 label: "Định dạng khung"
                 widget: "select"
