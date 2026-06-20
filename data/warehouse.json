@@ -1,48 +1,26 @@
 {
   "posts": [
-    {
-      "caption": "Ưu đãi trẻ hoá da mùa hè — đặt lịch trong tháng 6 để nhận liệu trình chăm sóc kèm theo.",
-      "format": "cover3",
-      "images": [
-        { "image": "/uploads/enuffstudio-post-1.png" },
-        { "image": "/uploads/enuffstudio-post-2.png" },
-        { "image": "/uploads/enuffstudio-post-3.png" },
-        { "image": "/uploads/enuffstudio-post-4.png" }
-      ],
-      "date": "2026-06-19",
-      "order": 1
-    },
-    {
-      "caption": "Liệu trình trị nám chuyên sâu — công nghệ mới, an toàn cho mọi loại da.",
-      "format": "s45",
-      "images": [
-        { "image": "/uploads/enuffstudio-post-2.png" }
-      ],
-      "date": "2026-06-18",
-      "order": 2
-    },
-    {
-      "caption": "Hành trình làn da của khách hàng sau 4 tuần. Cảm ơn bạn đã tin tưởng.",
-      "format": "three",
-      "images": [
-        { "image": "/uploads/enuffstudio-post-1.png" },
-        { "image": "/uploads/enuffstudio-post-3.png" },
-        { "image": "/uploads/enuffstudio-post-4.png" }
-      ],
-      "date": "2026-06-17",
-      "order": 3
-    },
-    {
-      "caption": "Bộ ảnh nhận diện cho thương hiệu — ráp lưới 4 ảnh.",
-      "format": "grid4",
-      "images": [
-        { "image": "/uploads/enuffstudio-post-1.png" },
-        { "image": "/uploads/enuffstudio-post-2.png" },
-        { "image": "/uploads/enuffstudio-post-3.png" },
-        { "image": "/uploads/enuffstudio-post-4.png" }
-      ],
-      "date": "2026-06-16",
-      "order": 4
-    }
+    { "caption": "Style 9 — 1 bìa dọc 598×900 + 3 ảnh vuông.", "format": "s9", "date": "2026-06-19", "order": 1,
+      "images": [ {"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-4.png"} ] },
+    { "caption": "Style 8 — lưới 2×2 (4 ảnh vuông).", "format": "s8", "date": "2026-06-19", "order": 2,
+      "images": [ {"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-4.png"},{"image":"/uploads/enuffstudio-post-1.png"} ] },
+    { "caption": "Style 10 — 1 ảnh ngang trên + 3 vuông dưới.", "format": "s10", "date": "2026-06-18", "order": 3,
+      "images": [ {"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-4.png"} ] },
+    { "caption": "Style 6 — 1 ảnh dọc trái + 2 vuông phải.", "format": "s6", "date": "2026-06-18", "order": 4,
+      "images": [ {"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-3.png"} ] },
+    { "caption": "Style 7 — 1 ảnh ngang trên + 2 vuông dưới.", "format": "s7", "date": "2026-06-17", "order": 5,
+      "images": [ {"image":"/uploads/enuffstudio-post-4.png"},{"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-3.png"} ] },
+    { "caption": "Style 5 — 3 ảnh vuông hàng ngang.", "format": "s5", "date": "2026-06-17", "order": 6,
+      "images": [ {"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-4.png"} ] },
+    { "caption": "Style 2 — 2 ảnh vuông cạnh nhau.", "format": "s2", "date": "2026-06-16", "order": 7,
+      "images": [ {"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-4.png"} ] },
+    { "caption": "Style 3 — 2 ảnh dọc cạnh nhau.", "format": "s3", "date": "2026-06-16", "order": 8,
+      "images": [ {"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-2.png"} ] },
+    { "caption": "Style 4 — 2 ảnh ngang xếp dọc.", "format": "s4", "date": "2026-06-15", "order": 9,
+      "images": [ {"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-1.png"} ] },
+    { "caption": "Style 1 — 1 ảnh vuông 900×900.", "format": "s1_square", "date": "2026-06-15", "order": 10,
+      "images": [ {"image":"/uploads/enuffstudio-post-2.png"} ] },
+    { "caption": "Style 1 — 1 ảnh story dọc 1080×1920.", "format": "s1_story", "date": "2026-06-14", "order": 11,
+      "images": [ {"image":"/uploads/enuffstudio-post-4.png"} ] }
   ]
 }
