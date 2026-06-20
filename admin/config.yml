@@ -292,6 +292,10 @@ collections:
                   name: "image"
                   label: "Ảnh"
                   widget: "image"
+              - name: "film"
+                label: "Hiệu ứng bề mặt film (grain)"
+                widget: "boolean"
+                default: false
               - name: "date"
                 label: "Ngày"
                 widget: "datetime"
