@@ -1,0 +1,48 @@
+{
+  "posts": [
+    {
+      "caption": "Ưu đãi trẻ hoá da mùa hè — đặt lịch trong tháng 6 để nhận liệu trình chăm sóc kèm theo.",
+      "format": "cover3",
+      "images": [
+        { "image": "/uploads/enuffstudio-post-1.png" },
+        { "image": "/uploads/enuffstudio-post-2.png" },
+        { "image": "/uploads/enuffstudio-post-3.png" },
+        { "image": "/uploads/enuffstudio-post-4.png" }
+      ],
+      "date": "2026-06-19",
+      "order": 1
+    },
+    {
+      "caption": "Liệu trình trị nám chuyên sâu — công nghệ mới, an toàn cho mọi loại da.",
+      "format": "s45",
+      "images": [
+        { "image": "/uploads/enuffstudio-post-2.png" }
+      ],
+      "date": "2026-06-18",
+      "order": 2
+    },
+    {
+      "caption": "Hành trình làn da của khách hàng sau 4 tuần. Cảm ơn bạn đã tin tưởng.",
+      "format": "three",
+      "images": [
+        { "image": "/uploads/enuffstudio-post-1.png" },
+        { "image": "/uploads/enuffstudio-post-3.png" },
+        { "image": "/uploads/enuffstudio-post-4.png" }
+      ],
+      "date": "2026-06-17",
+      "order": 3
+    },
+    {
+      "caption": "Bộ ảnh nhận diện cho thương hiệu — ráp lưới 4 ảnh.",
+      "format": "grid4",
+      "images": [
+        { "image": "/uploads/enuffstudio-post-1.png" },
+        { "image": "/uploads/enuffstudio-post-2.png" },
+        { "image": "/uploads/enuffstudio-post-3.png" },
+        { "image": "/uploads/enuffstudio-post-4.png" }
+      ],
+      "date": "2026-06-16",
+      "order": 4
+    }
+  ]
+}
