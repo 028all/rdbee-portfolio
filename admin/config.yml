@@ -256,15 +256,22 @@ collections:
               - name: "format"
                 label: "Định dạng khung"
                 widget: "select"
-                default: "s45"
+                default: "s1_square"
                 options:
-                  - { label: "1 ảnh dọc 4:5", value: "s45" }
-                  - { label: "1 ảnh vuông 1:1", value: "s11" }
-                  - { label: "1 ảnh dọc 9:16", value: "s916" }
-                  - { label: "Bộ 2 ảnh", value: "two" }
-                  - { label: "Bộ 3 ảnh (1 lớn + 2)", value: "three" }
-                  - { label: "Bộ 4 ảnh (lưới 2x2)", value: "grid4" }
-                  - { label: "Bìa + 3 vuông", value: "cover3" }
+                  - { label: "Style 1 · 1 ảnh vuông (900×900)", value: "s1_square" }
+                  - { label: "Style 1 · 1 ảnh ngang (1200×900)", value: "s1_landscape" }
+                  - { label: "Style 1 · 1 ảnh event cover (1200×628)", value: "s1_event" }
+                  - { label: "Style 1 · 1 ảnh share link (1200×518)", value: "s1_link" }
+                  - { label: "Style 1 · 1 ảnh story (1080×1920)", value: "s1_story" }
+                  - { label: "Style 2 · 2 ảnh vuông cạnh nhau", value: "s2" }
+                  - { label: "Style 3 · 2 ảnh dọc cạnh nhau", value: "s3" }
+                  - { label: "Style 4 · 2 ảnh ngang xếp dọc", value: "s4" }
+                  - { label: "Style 5 · 3 ảnh vuông hàng ngang", value: "s5" }
+                  - { label: "Style 6 · 1 dọc trái + 2 phải", value: "s6" }
+                  - { label: "Style 7 · 1 ngang trên + 2 dưới", value: "s7" }
+                  - { label: "Style 8 · Lưới 2×2", value: "s8" }
+                  - { label: "Style 9 · 1 bìa dọc + 3 phải", value: "s9" }
+                  - { label: "Style 10 · 1 ngang trên + 3 dưới", value: "s10" }
               - name: "images"
                 label: "Ảnh (theo thứ tự)"
                 widget: "list"
