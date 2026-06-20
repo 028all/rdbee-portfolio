@@ -232,11 +232,23 @@ function whMedia(post) {
   return `<div class="wh-media"><div class="wh-collage" style="${gs}">${cells}</div></div>`;
 }
 function fmtWHDate(d){ if(!d) return ''; try { return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); } catch(e){ return String(d); } }
+function whBrandList() {
+  const seen = [];
+  warehouse.forEach(p => { const b = (p.brand||'').trim(); if (b && !seen.includes(b)) seen.push(b); });
+  return seen;
+}
+function buildWhChips() {
+  const brands = whBrandList();
+  if (!brands.length) return '';
+  const chip = (b,label,on) => `<button class="wh-chip${on?' on':''}" data-brand="${esc(b)}">${esc(label)}</button>`;
+  return `<div class="wh-chips" id="whChips">${chip('__all__','All',true)}${brands.map(b=>chip(b,b,false)).join('')}</div>`;
+}
 function buildWarehouseFeed() {
   if (!warehouse.length) return `<p class="wh-empty">Chưa có bài nào trong kho. Thêm bài trong CMS hoặc data/warehouse.json.</p>`;
-  return warehouse.map((p,i)=>
-    `\n    <article class="wh-post">${whMedia(p)}<div class="wh-post-foot"><p class="wh-caption">${nl2br(p.caption||'')}</p><p class="wh-meta"><span>${esc(fmtWHDate(p.date))}</span><span>${String(i+1).padStart(2,'0')}</span></p></div></article>`
-  ).join('');
+  return warehouse.map((p)=>{
+    const brand = (p.brand||'').trim();
+    return `\n    <article class="wh-post" data-brand="${esc(brand)}">${whMedia(p)}<div class="wh-post-foot">${brand?`<p class="wh-brand">${esc(brand)}</p>`:''}<p class="wh-caption">${nl2br(p.caption||'')}</p><p class="wh-meta"><span>${esc(fmtWHDate(p.date))}</span></p></div></article>`;
+  }).join('');
 }
 
 // ─── INJECT INTO TEMPLATE ──────────────────────────────
@@ -292,7 +304,12 @@ const footerBlock = ((html.match(/<footer>[\s\S]*?<\/footer>/) || [''])[0]).repl
 
 const WH_CSS = `
   .wh-wrap{padding:92px 28px 40px;max-width:1180px;margin:0 auto;}
-  .wh-intro{font-family:var(--font-mono);font-size:13px;line-height:1.6;color:var(--mid);max-width:62ch;margin:14px 0 36px;}
+  .wh-intro{font-family:var(--font-mono);font-size:13px;line-height:1.6;color:var(--mid);max-width:62ch;margin:14px 0 24px;}
+  .wh-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 32px;}
+  .wh-chip{font-family:var(--font-mono);font-size:12px;letter-spacing:.02em;color:var(--mid);background:transparent;border:1px solid var(--border);padding:8px 15px;border-radius:999px;cursor:none;transition:color .18s ease,background .18s ease,border-color .18s ease;}
+  .wh-chip:hover{color:var(--black);border-color:var(--black);}
+  .wh-chip.on{background:var(--black);color:var(--white);border-color:var(--black);}
+  .wh-brand{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:9px;}
   .wh-active{font-weight:500 !important;text-decoration:underline;text-underline-offset:4px;}
   .wh-feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:30px;align-items:start;}
   @media(max-width:540px){.wh-feed{grid-template-columns:1fr;}}
@@ -329,6 +346,13 @@ const WH_SCRIPT = '<scr'+'ipt>'
 + 'document.getElementById("whLbClose").addEventListener("click",function(){lb.classList.remove("open");});'
 + 'lb.addEventListener("click",function(e){if(e.target===lb)lb.classList.remove("open");});'
 + 'document.addEventListener("keydown",function(e){if(e.key==="Escape")lb.classList.remove("open");});'
++ 'var feed=document.querySelector(".wh-feed"),chips=document.getElementById("whChips");'
++ 'function shuffleFeed(){if(!feed)return;var els=[].slice.call(feed.children);for(var i=els.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=els[i];els[i]=els[j];els[j]=t;}els.forEach(function(e){feed.appendChild(e);});}'
++ 'function applyFilter(brand){if(!feed)return;feed.querySelectorAll(".wh-post").forEach(function(p){p.style.display=(brand==="__all__"||p.getAttribute("data-brand")===brand)?"":"none";});if(chips){chips.querySelectorAll(".wh-chip").forEach(function(c){c.classList.toggle("on",c.getAttribute("data-brand")===brand);});}if(brand==="__all__"){shuffleFeed();}}'
++ 'function brandFromHash(){var m=location.hash.match(/b=([^&]+)/);return m?decodeURIComponent(m[1]):"__all__";}'
++ 'if(chips){chips.addEventListener("click",function(e){var c=e.target.closest(".wh-chip");if(!c)return;var b=c.getAttribute("data-brand");location.hash=(b==="__all__")?"":("b="+encodeURIComponent(b));applyFilter(b);});}'
++ 'window.addEventListener("hashchange",function(){applyFilter(brandFromHash());});'
++ 'applyFilter(brandFromHash());'
 + '</scr'+'ipt>';
 
 const whHeader = `<header>
@@ -365,6 +389,7 @@ ${whHeader}
     <span class="section-count">${String(warehouse.length).padStart(2,'0')} Posts · ${esc(settings.instagram||'@nnhanlee')}</span>
   </div>
   <p class="wh-intro">${nl2br(settings.warehouse_intro||'Kho kết quả social tôi làm cho các thương hiệu làm đẹp & thời trang — tuyển chọn và cập nhật mỗi ngày. Vào xem nhé.')}</p>
+  ${buildWhChips()}
   <div class="wh-feed">${buildWarehouseFeed()}</div>
 </main>
 ${footerBlock}
