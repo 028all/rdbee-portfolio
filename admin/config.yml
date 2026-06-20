@@ -237,6 +237,53 @@ collections:
                 widget: "number"
                 value_type: "int"
 
+  - name: "warehouse"
+    label: "The Warehouse (Social Kho)"
+    files:
+      - name: "warehouse_posts"
+        label: "Warehouse Posts"
+        file: "data/warehouse.json"
+        fields:
+          - name: "posts"
+            label: "Posts"
+            label_singular: "Post"
+            widget: "list"
+            fields:
+              - name: "caption"
+                label: "Caption / Nội dung"
+                widget: "text"
+                required: false
+              - name: "format"
+                label: "Định dạng khung"
+                widget: "select"
+                default: "s45"
+                options:
+                  - { label: "1 ảnh dọc 4:5", value: "s45" }
+                  - { label: "1 ảnh vuông 1:1", value: "s11" }
+                  - { label: "1 ảnh dọc 9:16", value: "s916" }
+                  - { label: "Bộ 2 ảnh", value: "two" }
+                  - { label: "Bộ 3 ảnh (1 lớn + 2)", value: "three" }
+                  - { label: "Bộ 4 ảnh (lưới 2x2)", value: "grid4" }
+                  - { label: "Bìa + 3 vuông", value: "cover3" }
+              - name: "images"
+                label: "Ảnh (theo thứ tự)"
+                widget: "list"
+                field:
+                  name: "image"
+                  label: "Ảnh"
+                  widget: "image"
+              - name: "date"
+                label: "Ngày"
+                widget: "datetime"
+                date_format: "YYYY-MM-DD"
+                time_format: false
+                required: false
+              - name: "order"
+                label: "Thứ tự (số nhỏ lên trước)"
+                widget: "number"
+                value_type: "int"
+                default: 1
+
   - name: "packages"
     label: "Design Packages"
     files:
