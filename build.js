@@ -202,38 +202,34 @@ function buildPackagesJSObject() { return JSON.stringify(packages, null, 2); }
 
 // ─── WAREHOUSE (Social "kho") ──────────────────────────
 const WH_FORMATS = {
-  s45:    { ar:'4 / 5'  },
-  s11:    { ar:'1 / 1'  },
-  s916:   { ar:'9 / 16' },
-  two:    { multi:true },
-  three:  { multi:true },
-  grid4:  { multi:true },
-  cover3: { multi:true, feature:true },
+  s1_square:    { label:"Style 1 · 1 ảnh vuông (900×900)",        n:1, ar:"1 / 1" },
+  s1_landscape: { label:"Style 1 · 1 ảnh ngang (1200×900)",       n:1, ar:"4 / 3" },
+  s1_event:     { label:"Style 1 · 1 ảnh event cover (1200×628)", n:1, ar:"1200 / 628" },
+  s1_link:      { label:"Style 1 · 1 ảnh share link (1200×518)",  n:1, ar:"1200 / 518" },
+  s1_story:     { label:"Style 1 · 1 ảnh story (1080×1920)",      n:1, ar:"9 / 16" },
+  s2:  { label:"Style 2 · 2 ảnh vuông cạnh nhau",  n:2, ar:"2 / 1",   cols:"1fr 1fr",     rows:"1fr",        cells:[{},{}] },
+  s3:  { label:"Style 3 · 2 ảnh dọc cạnh nhau",    n:2, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr",        cells:[{},{}] },
+  s4:  { label:"Style 4 · 2 ảnh ngang xếp dọc",    n:2, ar:"1 / 1",   cols:"1fr",         rows:"1fr 1fr",    cells:[{},{}] },
+  s5:  { label:"Style 5 · 3 ảnh vuông hàng ngang", n:3, ar:"3 / 1",   cols:"1fr 1fr 1fr", rows:"1fr",        cells:[{},{},{}] },
+  s6:  { label:"Style 6 · 1 dọc trái + 2 phải",    n:3, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr 1fr",    cells:[{s:"grid-column:1;grid-row:1 / span 2"},{s:"grid-column:2"},{s:"grid-column:2"}] },
+  s7:  { label:"Style 7 · 1 ngang trên + 2 dưới",  n:3, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr 1fr",    cells:[{s:"grid-column:1 / span 2;grid-row:1"},{s:"grid-row:2"},{s:"grid-row:2"}] },
+  s8:  { label:"Style 8 · Lưới 2×2",               n:4, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr 1fr",    cells:[{},{},{},{}] },
+  s9:  { label:"Style 9 · 1 bìa dọc + 3 phải (598×900)", n:4, ar:"1 / 1", cols:"2fr 1fr", rows:"1fr 1fr 1fr", cells:[{s:"grid-column:1;grid-row:1 / span 3"},{s:"grid-column:2"},{s:"grid-column:2"},{s:"grid-column:2"}] },
+  s10: { label:"Style 10 · 1 ngang trên + 3 dưới", n:4, ar:"1 / 1",   cols:"1fr 1fr 1fr", rows:"2fr 1fr",    cells:[{s:"grid-column:1 / span 3;grid-row:1"},{s:"grid-row:2"},{s:"grid-row:2"},{s:"grid-row:2"}] },
 };
-function whCell(src, style, moreN) {
-  return `<div class="wh-cell"${style?` style="${style}"`:''}><img src="${esc(src)}" alt="" loading="lazy">${moreN?`<span class="wh-more">+${moreN}</span>`:''}</div>`;
+function whCell(src, style) {
+  return `<div class="wh-cell"${style?` style="${style}"`:''}><img src="${esc(src)}" alt="" loading="lazy"></div>`;
 }
 function whMedia(post) {
   const imgs = resolveGallery(post.images);
-  const fmt = WH_FORMATS[post.format] || {};
-  if (!imgs.length) return `<div class="wh-media" style="aspect-ratio:4 / 5"><div class="img-placeholder tone-1" style="height:100%;">Post</div></div>`;
-  if (!fmt.multi || imgs.length === 1) {
-    return `<div class="wh-media" style="aspect-ratio:${fmt.ar||'4 / 5'}"><img src="${esc(imgs[0])}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>`;
+  const fmt = WH_FORMATS[post.format] || WH_FORMATS.s1_square;
+  if (!imgs.length) return `<div class="wh-media" style="aspect-ratio:${fmt.ar||'1 / 1'}"><div class="img-placeholder tone-1" style="height:100%;">Post</div></div>`;
+  if ((fmt.n||1) === 1 || !fmt.cells) {
+    return `<div class="wh-media" style="aspect-ratio:${fmt.ar||'1 / 1'}"><img src="${esc(imgs[0])}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>`;
   }
-  const n = imgs.length, more = n - Math.min(n, 5);
-  let gs = '', cells = [];
-  if (fmt.feature) {
-    gs = `aspect-ratio:1 / 1;grid-template-columns:1.5fr 1fr;grid-template-rows:repeat(${n-1},1fr)`;
-    cells = imgs.map((s,i)=> whCell(s, i===0?`grid-column:1;grid-row:1 / span ${n-1}`:'grid-column:2'));
-  } else if (n===2) { gs='aspect-ratio:1.5 / 1;grid-template-columns:1fr 1fr'; cells=imgs.map(s=>whCell(s)); }
-  else if (n===3) { gs='aspect-ratio:1 / 1;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr'; cells=imgs.map((s,i)=>whCell(s, i===0?'grid-column:1;grid-row:1 / span 2':'grid-column:2')); }
-  else if (n===4) { gs='aspect-ratio:1 / 1;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr'; cells=imgs.map(s=>whCell(s)); }
-  else {
-    gs='aspect-ratio:1.3 / 1;grid-template-columns:repeat(6,1fr);grid-template-rows:1fr 1fr';
-    const pos=['grid-column:1 / span 3;grid-row:1','grid-column:4 / span 3;grid-row:1','grid-column:1 / span 2;grid-row:2','grid-column:3 / span 2;grid-row:2','grid-column:5 / span 2;grid-row:2'];
-    cells=imgs.slice(0,5).map((s,i)=>whCell(s, pos[i], i===4 && more>0 ? more : 0));
-  }
-  return `<div class="wh-media"><div class="wh-collage" style="${gs}">${cells.join('')}</div></div>`;
+  const cells = fmt.cells.map((c,i)=> imgs[i] ? whCell(imgs[i], c.s||'') : '').join('');
+  const gs = `aspect-ratio:${fmt.ar};grid-template-columns:${fmt.cols};grid-template-rows:${fmt.rows}`;
+  return `<div class="wh-media"><div class="wh-collage" style="${gs}">${cells}</div></div>`;
 }
 function fmtWHDate(d){ if(!d) return ''; try { return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); } catch(e){ return String(d); } }
 function buildWarehouseFeed() {
