@@ -207,10 +207,10 @@ const WH_FORMATS = {
   s1_event:     { label:"Style 1 · 1 ảnh event cover (1200×628)", n:1, ar:"1200 / 628" },
   s1_link:      { label:"Style 1 · 1 ảnh share link (1200×518)",  n:1, ar:"1200 / 518" },
   s1_story:     { label:"Style 1 · 1 ảnh story (1080×1920)",      n:1, ar:"9 / 16" },
-  s2:  { label:"Style 2 · 2 ảnh vuông cạnh nhau",  n:2, ar:"2 / 1",   cols:"1fr 1fr",     rows:"1fr",        cells:[{},{}] },
+  s2:  { label:"Style 2 · 2 ảnh vuông cạnh nhau",  n:2, ar:"2 / 1",   cols:"1fr 1fr",     rows:"1fr",        cells:[{},{}], flat:true },
   s3:  { label:"Style 3 · 2 ảnh dọc cạnh nhau",    n:2, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr",        cells:[{},{}] },
   s4:  { label:"Style 4 · 2 ảnh ngang xếp dọc",    n:2, ar:"1 / 1",   cols:"1fr",         rows:"1fr 1fr",    cells:[{},{}] },
-  s5:  { label:"Style 5 · 3 ảnh vuông hàng ngang", n:3, ar:"3 / 1",   cols:"1fr 1fr 1fr", rows:"1fr",        cells:[{},{},{}] },
+  s5:  { label:"Style 5 · 3 ảnh vuông hàng ngang", n:3, ar:"3 / 1",   cols:"1fr 1fr 1fr", rows:"1fr",        cells:[{},{},{}], flat:true },
   s6:  { label:"Style 6 · 1 dọc trái + 2 phải",    n:3, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr 1fr",    cells:[{s:"grid-column:1;grid-row:1 / span 2"},{s:"grid-column:2"},{s:"grid-column:2"}] },
   s7:  { label:"Style 7 · 1 ngang trên + 2 dưới",  n:3, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr 1fr",    cells:[{s:"grid-column:1 / span 2;grid-row:1"},{s:"grid-row:2"},{s:"grid-row:2"}] },
   s8:  { label:"Style 8 · Lưới 2×2",               n:4, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr 1fr",    cells:[{},{},{},{}] },
@@ -247,7 +247,9 @@ function buildWarehouseFeed() {
   if (!warehouse.length) return `<p class="wh-empty">Chưa có bài nào trong kho. Thêm bài trong CMS hoặc data/warehouse.json.</p>`;
   return warehouse.map((p)=>{
     const brand = (p.brand||'').trim();
-    return `\n    <article class="wh-post" data-brand="${esc(brand)}">${whMedia(p)}<div class="wh-post-foot">${brand?`<p class="wh-brand">${esc(brand)}</p>`:''}<p class="wh-caption">${nl2br(p.caption||'')}</p><p class="wh-meta"><span>${esc(fmtWHDate(p.date))}</span></p></div></article>`;
+    const fmt = WH_FORMATS[p.format] || WH_FORMATS.s1_square;
+    const cls = `wh-post ${fmt.flat ? 'flat' : 'pol'}${p.film ? ' wh-film' : ''}`;
+    return `\n    <article class="${cls}" data-brand="${esc(brand)}">${whMedia(p)}<div class="wh-post-foot">${brand?`<p class="wh-brand">${esc(brand)}</p>`:''}<p class="wh-caption">${nl2br(p.caption||'')}</p><p class="wh-meta"><span>${esc(fmtWHDate(p.date))}</span></p></div></article>`;
   }).join('');
 }
 
@@ -309,11 +311,14 @@ const WH_CSS = `
   .wh-chip{font-family:var(--font-mono);font-size:12px;letter-spacing:.02em;color:var(--mid);background:transparent;border:1px solid var(--border);padding:8px 15px;border-radius:999px;cursor:none;transition:color .18s ease,background .18s ease,border-color .18s ease;}
   .wh-chip:hover{color:var(--black);border-color:var(--black);}
   .wh-chip.on{background:var(--black);color:var(--white);border-color:var(--black);}
-  .wh-brand{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:9px;}
+  .wh-brand{font-family:'Caveat',cursive;font-size:22px;line-height:1;color:var(--black);margin-bottom:5px;}
   .wh-active{font-weight:500 !important;text-decoration:underline;text-underline-offset:4px;}
   .wh-feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:30px;align-items:start;}
   @media(max-width:540px){.wh-feed{grid-template-columns:1fr;}}
-  .wh-post{border:1px solid var(--border);background:var(--white);max-width:420px;width:100%;margin:0 auto;cursor:none;}
+  .wh-post{background:var(--white);max-width:420px;width:100%;margin:0 auto;cursor:none;}
+  .wh-post.flat{border:1px solid var(--border);}
+  .wh-post.pol{padding:14px 14px 0;border-radius:2px;box-shadow:0 1px 1px rgba(10,10,10,.05),0 8px 16px -6px rgba(10,10,10,.18),0 24px 44px -20px rgba(10,10,10,.24);transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s;}
+  .wh-post.pol:hover{transform:translateY(-7px) rotate(-.6deg);box-shadow:0 2px 3px rgba(10,10,10,.06),0 18px 26px -8px rgba(10,10,10,.24),0 44px 66px -24px rgba(10,10,10,.32);}
   .wh-media{position:relative;width:100%;background:var(--black);overflow:hidden;}
   .wh-media>img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease,opacity .4s ease;}
   .wh-post:hover .wh-media>img{transform:scale(1.04);opacity:.9;}
@@ -323,6 +328,10 @@ const WH_CSS = `
   .wh-post:hover .wh-cell img{opacity:.92;}
   .wh-more{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,10,10,.5);color:var(--white);font-family:var(--font-display);font-size:26px;}
   .wh-post-foot{padding:14px 16px 16px;}
+  .wh-post.pol .wh-post-foot{padding:15px 6px 16px;}
+  .wh-film .wh-media img{filter:contrast(1.06) saturate(.9) sepia(.10) brightness(1.02);}
+  .wh-film .wh-media::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:140px 140px;}
+  .wh-film .wh-media::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;background:radial-gradient(ellipse at center,transparent 56%,rgba(10,10,10,.22) 100%);}
   .wh-caption{font-family:var(--font-mono);font-size:13px;line-height:1.5;color:var(--black);}
   .wh-meta{display:flex;justify-content:space-between;margin-top:12px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);}
   .wh-empty{color:var(--mid);font-family:var(--font-mono);grid-column:1/-1;}
@@ -376,7 +385,7 @@ const whHtml = `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${esc(WH_LABEL)} — ${esc(settings.logo_name||'Rd Bee')}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&subset=vietnamese&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&subset=vietnamese&display=swap" rel="stylesheet">
 ${styleBlock}
 <style>${WH_CSS}</style>
 </head>
