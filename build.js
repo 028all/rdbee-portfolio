@@ -216,6 +216,7 @@ const WH_FORMATS = {
   s8:  { label:"Style 8 · Lưới 2×2",               n:4, ar:"1 / 1",   cols:"1fr 1fr",     rows:"1fr 1fr",    cells:[{},{},{},{}] },
   s9:  { label:"Style 9 · 1 bìa dọc + 3 phải (598×900)", n:4, ar:"1 / 1", cols:"2fr 1fr", rows:"1fr 1fr 1fr", cells:[{s:"grid-column:1;grid-row:1 / span 3"},{s:"grid-column:2"},{s:"grid-column:2"},{s:"grid-column:2"}] },
   s10: { label:"Style 10 · 1 ngang trên + 3 dưới", n:4, ar:"1 / 1",   cols:"1fr 1fr 1fr", rows:"2fr 1fr",    cells:[{s:"grid-column:1 / span 3;grid-row:1"},{s:"grid-row:2"},{s:"grid-row:2"},{s:"grid-row:2"}] },
+  s11: { label:"Style 11 · 1 ảnh dọc 4:5 (2000×2500)", n:1, ar:"4 / 5" },
 };
 function whCell(src, style) {
   return `<div class="wh-cell"${style?` style="${style}"`:''}><img src="${esc(src)}" alt="" loading="lazy"></div>`;
