@@ -10,6 +10,20 @@
       "date": "2025-11-11",
       "brand": "KT Centre Group",
       "caption": "KT YOUTH LINE"
+    },
+    {
+      "format": "s10",
+      "film": true,
+      "order": 1,
+      "date": "2025-09-15",
+      "brand": "KT Centre Group",
+      "images": [
+        "/uploads/top-3-cn-1.png",
+        "/uploads/top-3-cn-2.png",
+        "/uploads/top-3-cn-3.png",
+        "/uploads/top-3-cn-4.png"
+      ],
+      "caption": "TOP 3 Liệu trình trẻ hóa được yêu thích nhất"
     }
   ]
 }
