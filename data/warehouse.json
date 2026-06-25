@@ -1,28 +1,3 @@
 {
-  "posts": [
-    { "brand": "KT Centre Group", "caption": "Style 11 — 1 ảnh dọc 4:5 (2000×2500).", "format": "s11", "film": false, "date": "2026-06-20", "order": 1,
-      "images": [ {"image":"/uploads/enuffstudio-post-1.png"} ] },
-    { "brand": "KT Centre Group", "caption": "Style 9 — bìa dọc 598×900 + 3 vuông. Ưu đãi trẻ hoá da mùa hè.", "format": "s9", "film": true, "date": "2026-06-19", "order": 1,
-      "images": [ {"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-4.png"} ] },
-    { "brand": "KT Centre Group", "caption": "Style 8 — lưới 2×2 (không bật film để so sánh).", "format": "s8", "film": false, "date": "2026-06-19", "order": 2,
-      "images": [ {"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-4.png"},{"image":"/uploads/enuffstudio-post-1.png"} ] },
-    { "brand": "KT Centre Group", "caption": "Style 1 — 1 ảnh vuông, có film.", "format": "s1_square", "film": true, "date": "2026-06-18", "order": 3,
-      "images": [ {"image":"/uploads/enuffstudio-post-3.png"} ] },
-    { "brand": "Porêves", "caption": "Style 10 — 1 ngang trên + 3 dưới, có film.", "format": "s10", "film": true, "date": "2026-06-18", "order": 4,
-      "images": [ {"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-4.png"} ] },
-    { "brand": "Porêves", "caption": "Style 6 — 1 dọc trái + 2 phải.", "format": "s6", "film": false, "date": "2026-06-17", "order": 5,
-      "images": [ {"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-3.png"} ] },
-    { "brand": "Enuff Studio", "caption": "Style 7 — 1 ngang trên + 2 dưới, có film.", "format": "s7", "film": true, "date": "2026-06-17", "order": 6,
-      "images": [ {"image":"/uploads/enuffstudio-post-4.png"},{"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-3.png"} ] },
-    { "brand": "Enuff Studio", "caption": "Style 5 — 3 vuông hàng ngang (khung phẳng, không Polaroid).", "format": "s5", "film": false, "date": "2026-06-16", "order": 7,
-      "images": [ {"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-4.png"} ] },
-    { "brand": "Ryo Vietnam", "caption": "Style 2 — 2 vuông cạnh nhau (khung phẳng, không Polaroid).", "format": "s2", "film": false, "date": "2026-06-16", "order": 8,
-      "images": [ {"image":"/uploads/enuffstudio-post-2.png"},{"image":"/uploads/enuffstudio-post-4.png"} ] },
-    { "brand": "Ryo Vietnam", "caption": "Style 3 — 2 ảnh dọc cạnh nhau, có film.", "format": "s3", "film": true, "date": "2026-06-15", "order": 9,
-      "images": [ {"image":"/uploads/enuffstudio-post-1.png"},{"image":"/uploads/enuffstudio-post-2.png"} ] },
-    { "brand": "Nepherteti", "caption": "Style 4 — 2 ảnh ngang xếp dọc.", "format": "s4", "film": false, "date": "2026-06-15", "order": 10,
-      "images": [ {"image":"/uploads/enuffstudio-post-3.png"},{"image":"/uploads/enuffstudio-post-1.png"} ] },
-    { "brand": "Nepherteti", "caption": "Style 1 — story dọc 1080×1920, có film.", "format": "s1_story", "film": true, "date": "2026-06-14", "order": 11,
-      "images": [ {"image":"/uploads/enuffstudio-post-4.png"} ] }
-  ]
+  "posts": []
 }
