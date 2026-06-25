@@ -13,6 +13,20 @@
       ],
       "date": "2025-09-15",
       "caption": "Liệu trình trẻ hóa được yêu thích nhất tháng 09"
+    },
+    {
+      "format": "s10",
+      "film": true,
+      "order": 1,
+      "images": [
+        "/uploads/1.png",
+        "/uploads/2.png",
+        "/uploads/3.png",
+        "/uploads/4.png"
+      ],
+      "date": "2025-09-11",
+      "brand": "KT Centre Group",
+      "caption": "Thông báo chuyển giao công nghệ - ra mắt KT SELF-EXOSOMES"
     }
   ]
 }
