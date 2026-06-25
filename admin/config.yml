@@ -285,6 +285,7 @@ collections:
                   - { label: "Style 8 · Lưới 2×2", value: "s8" }
                   - { label: "Style 9 · 1 bìa dọc + 3 phải", value: "s9" }
                   - { label: "Style 10 · 1 ngang trên + 3 dưới", value: "s10" }
+                  - { label: "Style 11 · 1 ảnh dọc 4:5 (2000×2500)", value: "s11" }
               - name: "images"
                 label: "Ảnh (theo thứ tự)"
                 widget: "list"
