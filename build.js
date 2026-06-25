@@ -337,7 +337,7 @@ const WH_CSS = `
   .wh-empty{color:var(--mid);font-family:var(--font-mono);grid-column:1/-1;}
   .wh-lightbox{position:fixed;inset:0;z-index:200;display:none;background:rgba(10,10,10,.93);align-items:center;justify-content:center;padding:40px;}
   .wh-lightbox.open{display:flex;}
-  .wh-lb-inner{max-width:460px;width:100%;max-height:90vh;overflow:auto;}
+  .wh-lb-inner{width:min(720px,92vw);max-height:92vh;overflow:auto;}
   .wh-lb-inner .wh-post{max-width:none;margin:0;}
   .wh-lb-inner .wh-post.pol:hover{transform:none;}
   .wh-lb-close{position:fixed;top:20px;right:24px;width:42px;height:42px;border:1px solid var(--white);background:transparent;color:var(--white);font-size:15px;cursor:none;border-radius:50%;z-index:201;}
