@@ -2,6 +2,8 @@
   "client": "KT Beauty Medical Centre",
   "featured": false,
   "order": 2,
+  "gallery": [],
+  "cover_image": "/uploads/ảnh-cover-project-retouch.png",
   "scope": "Retouch, Visual System",
   "title": "RETOUCHING — BEFORE & AFTER",
   "before_after": [
