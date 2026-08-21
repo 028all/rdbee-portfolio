@@ -84,6 +84,18 @@
       "status": "coming_soon",
       "industry": "Wellness",
       "projects": []
+    },
+    {
+      "status": "active",
+      "name": "RETOUCH",
+      "order": 9,
+      "industry": "Beauty Institute",
+      "projects": [
+        {
+          "title": "RETOUCHINGBEFORE & AFTER",
+          "tag": "Retouch"
+        }
+      ]
     }
   ]
 }
