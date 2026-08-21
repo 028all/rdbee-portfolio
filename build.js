@@ -195,6 +195,10 @@ function buildProjectsJSArray() {
     scope: p.scope||'—', industry: p.industry||'—', description: p.description||'—',
     cover_image: img(p.cover_image), hero_image: img(p.hero_image)||img(p.cover_image),
     gallery: resolveGallery(p.gallery), featured: p.featured === true,
+    before_after: (Array.isArray(p.before_after) ? p.before_after : []).map(x => ({
+      before: img(x.before), after: img(x.after),
+      ratio: (x.ratio || '4 / 3'), caption: esc(x.caption || '')
+    })).filter(x => x.before && x.after),
   })), null, 2);
 }
 
