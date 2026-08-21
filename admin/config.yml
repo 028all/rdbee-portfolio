@@ -164,6 +164,31 @@ collections:
           name: "image"
           label: "Image"
           widget: "image"
+      - name: "before_after"
+        label: "Before / After (thanh kéo so sánh)"
+        widget: "list"
+        required: false
+        label_singular: "Cặp ảnh"
+        fields:
+          - name: "before"
+            label: "Ảnh TRƯỚC (before)"
+            widget: "image"
+          - name: "after"
+            label: "Ảnh SAU (after)"
+            widget: "image"
+          - name: "ratio"
+            label: "Tỉ lệ khung"
+            widget: "select"
+            default: "4 / 3"
+            options:
+              - { label: "Ngang 4:3", value: "4 / 3" }
+              - { label: "Vuông 1:1", value: "1 / 1" }
+              - { label: "Dọc 4:5", value: "4 / 5" }
+              - { label: "Ngang 16:9", value: "16 / 9" }
+          - name: "caption"
+            label: "Ghi chú (tuỳ chọn)"
+            widget: "string"
+            required: false
       - name: "featured"
         label: "Featured in In Focus"
         widget: "boolean"
