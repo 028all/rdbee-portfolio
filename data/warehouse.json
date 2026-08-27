@@ -38,6 +38,20 @@
         "/uploads/4-postweb-.png"
       ],
       "caption": "Ultherapy Prime - Tác động"
+    },
+    {
+      "format": "s10",
+      "film": false,
+      "order": 1,
+      "caption": "Ultherapy Prime - Uy Tín",
+      "brand": "KT Centre Group",
+      "date": "2026-08-02",
+      "images": [
+        "/uploads/uy-tín-1postweb-.png",
+        "/uploads/uy-tín-2-postweb-.png",
+        "/uploads/uy-tín-3-postweb-.png",
+        "/uploads/uy-tín-4-postweb-.png"
+      ]
     }
   ]
 }
