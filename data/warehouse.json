@@ -24,6 +24,20 @@
         "/uploads/top-3-cn-4.png"
       ],
       "caption": "TOP 3 Liệu trình trẻ hóa được yêu thích nhất"
+    },
+    {
+      "format": "s9",
+      "film": false,
+      "order": 1,
+      "brand": "KT Centre Group",
+      "date": "2026-08-01",
+      "images": [
+        "/uploads/1-postweb-.png",
+        "/uploads/2-postweb-.png",
+        "/uploads/3-postweb-.png",
+        "/uploads/4-postweb-.png"
+      ],
+      "caption": "Ultherapy Prime - Tác động"
     }
   ]
 }
